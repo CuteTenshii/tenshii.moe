@@ -7,7 +7,7 @@ import {
   SiTypescript,
   SiWebstorm, SiYaml
 } from '@icons-pack/react-simple-icons';
-import VSCodeLogo from '@/components/VSCodeLogo.astro';
+import VSCodeLogo from '@/components/icons/VSCodeLogo.astro';
 import { LoaderCircle } from 'lucide-react';
 
 export default function WakapiStats() {
