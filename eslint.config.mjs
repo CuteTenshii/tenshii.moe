@@ -3,7 +3,7 @@ import tseslint from 'typescript-eslint';
 
 const eslintConfig = defineConfig([
   ...tseslint.configs.recommended,
-  globalIgnores(['dist/**', 'node_modules/**']),
+  globalIgnores(['dist/**', 'node_modules/**', '.astro/**']),
   {
     rules: {
       indent: ['error', 2],

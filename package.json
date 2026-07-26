@@ -20,7 +20,7 @@
     "@tailwindcss/vite": "^4.3.3",
     "eslint": "^10.8.0",
     "tailwindcss": "^4.3.3",
-    "typescript": "^7.0.2",
+    "typescript": "^6.0.3",
     "typescript-eslint": "^8.65.0"
   }
 }
