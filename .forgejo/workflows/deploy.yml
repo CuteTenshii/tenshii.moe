@@ -1,0 +1,37 @@
+name: Deploy Astro site to git-pages
+
+on:
+  push:
+    branches: [master]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+
+      - name: Set up Bun
+        uses: oven-sh/setup-bun@v2
+
+      - name: Install dependencies
+        run: bun install --frozen-lockfile
+
+      - name: Build
+        run: bun run build
+
+      - name: Publish
+        uses: actions/git-pages@v2
+        with:
+          site: https://tenshii.moe/
+          server: pages.tenshii.moe
+          source: dist/
+          token: ${{ forgejo.token }}
