@@ -14,6 +14,8 @@ import {
   Zsh,
   Astro as AstroIcon,
   Javascript,
+  Rust,
+  Webassembly,
 } from "simple-icons-astro";
 
 type Tech = { name: string; Icon: any };
@@ -31,6 +33,8 @@ const T = {
   ArchLinux: { name: "Arch Linux",   Icon: Archlinux },
   Zsh:       { name: "Zsh",          Icon: Zsh },
   JS:        { name: "JavaScript",   Icon: Javascript },
+  Rust:      { name: "Rust",         Icon: Rust },
+  Wasm:      { name: "WebAssembly",  Icon: Webassembly },
 } satisfies Record<string, Tech>;
 
 const categories = [
@@ -77,6 +81,15 @@ const projects: Array<{
     github: "CuteTenshii.github.io",
     category: "web",
     tech: [T.Astro, T.TS, T.Tailwind],
+  },
+  {
+    name: "switch-wasm",
+    description: "A from-scratch Nintendo Switch emulator: an ARM64 interpreter and GM20B GPU emulation compiled to WebAssembly. Boots homebrew NROs entirely in your browser, nothing is uploaded.",
+    link: "https://tenshii.moe/Switch-Wasm/",
+    image: "https://tenshii.moe/Switch-Wasm/assets/favicon.svg",
+    github: "Switch-Wasm",
+    category: "reversing",
+    tech: [T.Rust, T.Wasm],
   },
   {
     name: "Deezer Discord RPC",
