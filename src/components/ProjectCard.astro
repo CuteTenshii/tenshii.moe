@@ -6,14 +6,14 @@ interface Props {
   description: string;
   link: string;
   image: string | null;
-  github: string | null;
+  repo: string | null;
   category: string;
   categoryLabel: string;
   categoryClass: string;
   tech: { name: string; Icon: any }[];
 }
 
-const { name, description, link, image, github, category, categoryLabel, categoryClass, tech } = Astro.props;
+const { name, description, link, image, repo, category, categoryLabel, categoryClass, tech } = Astro.props;
 ---
 
 <a
@@ -54,18 +54,18 @@ const { name, description, link, image, github, category, categoryLabel, categor
     ))}
   </div>
 
-  {github && (
+  {repo && (
     <div
       class="hidden items-center gap-4 text-xs text-gray-500 pt-2 border-t border-gray-700/50"
-      data-github={github}
+      data-repo={repo}
     >
       <span class="flex items-center gap-1">
         <Star size={12} />
-        <span data-github-stars>–</span>
+        <span data-repo-stars>–</span>
       </span>
       <span class="flex items-center gap-1">
         <Clock size={12} />
-        <span>Updated </span><span data-github-updated>–</span>
+        <span>Updated </span><span data-repo-updated>–</span>
       </span>
     </div>
   )}

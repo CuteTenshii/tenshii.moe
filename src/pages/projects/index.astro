@@ -60,7 +60,7 @@ const projects: Array<{
   description: string;
   link: string;
   image: string | null;
-  github: string | null;
+  repo: string | null;
   category: CategoryId;
   tech: Tech[];
 }> = [
@@ -69,16 +69,16 @@ const projects: Array<{
     description: "A modern and customizable biolinks website, already used by more than 1,900 users!",
     link: "https://miwa.lol",
     image: "https://miwa.lol/images/miwa-256.png",
-    github: null,
+    repo: null,
     category: "web",
     tech: [T.NextJS, T.Tailwind, T.Go, T.PG, T.Redis],
   },
   {
     name: "Tenshii.moe",
     description: "My personal website, you are currently on it!",
-    link: "https://git.tenshii.moe/Tenshii/tenshii.moe",
+    link: "https://tenshii.moe",
     image: "/img/pfp.webp",
-    github: null,
+    repo: "https://git.tenshii.moe/Tenshii/tenshii.moe",
     category: "web",
     tech: [T.Astro, T.TS, T.Tailwind],
   },
@@ -87,7 +87,7 @@ const projects: Array<{
     description: "A from-scratch Nintendo Switch emulator: an ARM64 interpreter and GM20B GPU emulation compiled to WebAssembly. Boots homebrew NROs entirely in your browser, nothing is uploaded.",
     link: "https://tenshii.moe/Switch-Wasm/",
     image: "https://tenshii.moe/Switch-Wasm/assets/favicon.svg",
-    github: "Switch-Wasm",
+    repo: "https://git.tenshii.moe/Tenshii/Switch-Wasm",
     category: "reversing",
     tech: [T.Rust, T.Wasm],
   },
@@ -96,7 +96,7 @@ const projects: Array<{
     description: "A Discord RPC for Deezer.",
     link: "https://github.com/CuteTenshii/deezer-discord-rpc",
     image: "https://raw.githubusercontent.com/CuteTenshii/deezer-discord-rpc/refs/heads/master/.github/screenshots/rpc.png",
-    github: "deezer-discord-rpc",
+    repo: "https://github.com/CuteTenshii/deezer-discord-rpc",
     category: "desktop",
     tech: [T.Electron, T.TS],
   },
@@ -105,7 +105,7 @@ const projects: Array<{
     description: "Reverse engineering of the PoW used to record views on guns.lol profile pages. The README includes a detailed explanation of how the PoW works.",
     link: "https://github.com/CuteTenshii/guns-solver",
     image: null,
-    github: "guns-solver",
+    repo: "https://github.com/CuteTenshii/guns-solver",
     category: "reversing",
     tech: [T.Go],
   },
@@ -114,7 +114,7 @@ const projects: Array<{
     description: "A Go program to download episodes from Crunchyroll. Merges video and audio segments (and optionally subtitles) into a MKV container.",
     link: "https://github.com/CuteTenshii/crunchyroll-downloader",
     image: null,
-    github: "crunchyroll-downloader",
+    repo: "https://github.com/CuteTenshii/crunchyroll-downloader",
     category: "tool",
     tech: [T.Go],
   },
@@ -123,7 +123,7 @@ const projects: Array<{
     description: "My dotfiles for Arch Linux with Hyprland, zsh, kitty... Also includes scripts I made for my VPS.",
     link: "https://github.com/CuteTenshii/dotfiles",
     image: "https://raw.githubusercontent.com/CuteTenshii/dotfiles/master/desktop.png",
-    github: "dotfiles",
+    repo: "https://github.com/CuteTenshii/dotfiles",
     category: "config",
     tech: [T.ArchLinux, T.Zsh],
   },
@@ -132,7 +132,7 @@ const projects: Array<{
     description: 'Reverse-engineering of the custom protocol of the 2015 "Paradise Bay" game.',
     link: "https://github.com/CuteTenshii/paradise-bay-server",
     image: null,
-    github: "paradise-bay-server",
+    repo: "https://github.com/CuteTenshii/paradise-bay-server",
     category: "reversing",
     tech: [T.Go],
   },
@@ -141,7 +141,7 @@ const projects: Array<{
     description: "A Cloudflare Worker that serves a website's favicon from a given URL.",
     link: "https://github.com/CuteTenshii/favicon",
     image: null,
-    github: "favicon",
+    repo: "https://github.com/CuteTenshii/favicon",
     category: "tool",
     tech: [T.TS, T.CF],
   },
@@ -150,7 +150,7 @@ const projects: Array<{
     description: "A browser extension that enhances the Deezer web player with additional features and improvements. (Abandoned)",
     link: "https://github.com/CuteTenshii/deezer-enhancer",
     image: null,
-    github: "deezer-enhancer",
+    repo: "https://github.com/CuteTenshii/deezer-enhancer",
     category: "tool",
     tech: [T.TS],
   },
@@ -159,7 +159,7 @@ const projects: Array<{
     description: "Datamining for the Wplace.live website. Extracts and renames files since their hashes change with every new build.",
     link: "https://github.com/CuteTenshii/wplace-datamining",
     image: null,
-    github: "wplace-datamining",
+    repo: "https://github.com/CuteTenshii/wplace-datamining",
     category: "reversing",
     tech: [T.JS],
   },
@@ -168,7 +168,7 @@ const projects: Array<{
     description: "Datamining for the guns.lol website.",
     link: "https://github.com/CuteTenshii/guns-datamining",
     image: null,
-    github: "guns-datamining",
+    repo: "https://github.com/CuteTenshii/guns-datamining",
     category: "reversing",
     tech: [T.JS],
   },
@@ -177,7 +177,7 @@ const projects: Array<{
     description: "A Node.js wrapper for the internal Burger King France API.",
     link: "https://github.com/CuteTenshii/burger-king-fr-api",
     image: null,
-    github: "burger-king-fr-api",
+    repo: "https://github.com/CuteTenshii/burger-king-fr-api",
     category: "tool",
     tech: [T.JS],
   },
@@ -248,18 +248,35 @@ const projects: Array<{
       return new Date(iso).toLocaleDateString("en-US", { month: "short", year: "numeric" });
     }
 
-    async function loadGithubStats() {
-      const containers = Array.from(document.querySelectorAll<HTMLDivElement>("[data-github]"));
+    async function fetchRepoStats(repoUrl: string) {
+      const { host, pathname } = new URL(repoUrl);
+      const [owner, name] = pathname.replace(/^\/|\/$|\.git$/g, "").split("/");
+      if (!owner || !name) return null;
+
+      // Anything that isn't GitHub is a Forgejo instance: same endpoint shape, different field names.
+      const isGithub = host === "github.com";
+      const res = await fetch(isGithub
+        ? `https://api.github.com/repos/${owner}/${name}`
+        : `https://${host}/api/v1/repos/${owner}/${name}`);
+      if (!res.ok) return null;
+
+      const data = await res.json();
+      return isGithub
+        ? { stars: data.stargazers_count as number, updated: data.pushed_at as string }
+        : { stars: data.stars_count as number, updated: data.updated_at as string };
+    }
+
+    async function loadRepoStats() {
+      const containers = Array.from(document.querySelectorAll<HTMLDivElement>("[data-repo]"));
       if (!containers.length) return;
 
       await Promise.all(containers.map(async (el) => {
         try {
-          const res = await fetch(`https://api.github.com/repos/CuteTenshii/${el.dataset.github}`);
-          if (!res.ok) return;
+          const stats = await fetchRepoStats(el.dataset.repo!);
+          if (!stats) return;
 
-          const data = await res.json();
-          el.querySelector<HTMLSpanElement>("[data-github-stars]")!.textContent = data.stargazers_count.toLocaleString();
-          el.querySelector<HTMLSpanElement>("[data-github-updated]")!.textContent = formatDate(data.pushed_at);
+          el.querySelector<HTMLSpanElement>("[data-repo-stars]")!.textContent = stats.stars.toLocaleString();
+          el.querySelector<HTMLSpanElement>("[data-repo-updated]")!.textContent = formatDate(stats.updated);
           el.classList.remove("hidden");
           el.classList.add("flex");
         } catch {}
@@ -267,6 +284,6 @@ const projects: Array<{
     }
 
     // ClientRouter fires astro:page-load on the initial load too, so this is the only entry point needed.
-    document.addEventListener("astro:page-load", () => { initFilters(); loadGithubStats(); });
+    document.addEventListener("astro:page-load", () => { initFilters(); loadRepoStats(); });
   </script>
 </BaseLayout>
