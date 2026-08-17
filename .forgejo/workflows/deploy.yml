@@ -32,6 +32,5 @@ jobs:
         uses: actions/git-pages@v2
         with:
           site: https://tenshii.moe/
-          server: pages.tenshii.moe
           source: dist/
           token: ${{ forgejo.token }}
