@@ -1,57 +1,58 @@
 ---
-import BaseLayout from "@/layouts/BaseLayout.astro";
-import ProjectCard from "@/components/ProjectCard.astro";
+import type { AstroComponentFactory } from 'astro/runtime/server/index.js';
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import ProjectCard from '@/components/ProjectCard.astro';
 // Importing from the barrel instead makes the dev server compile all 3356 icons.
-import Go from "simple-icons-astro/Go";
-import Typescript from "simple-icons-astro/Typescript";
-import Nextdotjs from "simple-icons-astro/Nextdotjs";
-import Tailwindcss from "simple-icons-astro/Tailwindcss";
-import Postgresql from "simple-icons-astro/Postgresql";
-import Redis from "simple-icons-astro/Redis";
-import Electron from "simple-icons-astro/Electron";
-import Cloudflare from "simple-icons-astro/Cloudflare";
-import Archlinux from "simple-icons-astro/Archlinux";
-import Zsh from "simple-icons-astro/Zsh";
-import AstroIcon from "simple-icons-astro/Astro";
-import Javascript from "simple-icons-astro/Javascript";
-import Rust from "simple-icons-astro/Rust";
-import Webassembly from "simple-icons-astro/Webassembly";
+import Go from 'simple-icons-astro/Go';
+import Typescript from 'simple-icons-astro/Typescript';
+import Nextdotjs from 'simple-icons-astro/Nextdotjs';
+import Tailwindcss from 'simple-icons-astro/Tailwindcss';
+import Postgresql from 'simple-icons-astro/Postgresql';
+import Redis from 'simple-icons-astro/Redis';
+import Electron from 'simple-icons-astro/Electron';
+import Cloudflare from 'simple-icons-astro/Cloudflare';
+import Archlinux from 'simple-icons-astro/Archlinux';
+import Zsh from 'simple-icons-astro/Zsh';
+import AstroIcon from 'simple-icons-astro/Astro';
+import Javascript from 'simple-icons-astro/Javascript';
+import Rust from 'simple-icons-astro/Rust';
+import Webassembly from 'simple-icons-astro/Webassembly';
 
-type Tech = { name: string; Icon: any };
+type Tech = { name: string; Icon: AstroComponentFactory };
 
 const T = {
-  Go:        { name: "Go",           Icon: Go },
-  TS:        { name: "TypeScript",   Icon: Typescript },
-  NextJS:    { name: "Next.js",      Icon: Nextdotjs },
-  Tailwind:  { name: "Tailwind CSS", Icon: Tailwindcss },
-  PG:        { name: "PostgreSQL",   Icon: Postgresql },
-  Redis:     { name: "Redis",        Icon: Redis },
-  Astro:     { name: "Astro",        Icon: AstroIcon },
-  Electron:  { name: "Electron",     Icon: Electron },
-  CF:        { name: "Cloudflare",   Icon: Cloudflare },
-  ArchLinux: { name: "Arch Linux",   Icon: Archlinux },
-  Zsh:       { name: "Zsh",          Icon: Zsh },
-  JS:        { name: "JavaScript",   Icon: Javascript },
-  Rust:      { name: "Rust",         Icon: Rust },
-  Wasm:      { name: "WebAssembly",  Icon: Webassembly },
+  Go:        { name: 'Go',           Icon: Go },
+  TS:        { name: 'TypeScript',   Icon: Typescript },
+  NextJS:    { name: 'Next.js',      Icon: Nextdotjs },
+  Tailwind:  { name: 'Tailwind CSS', Icon: Tailwindcss },
+  PG:        { name: 'PostgreSQL',   Icon: Postgresql },
+  Redis:     { name: 'Redis',        Icon: Redis },
+  Astro:     { name: 'Astro',        Icon: AstroIcon },
+  Electron:  { name: 'Electron',     Icon: Electron },
+  CF:        { name: 'Cloudflare',   Icon: Cloudflare },
+  ArchLinux: { name: 'Arch Linux',   Icon: Archlinux },
+  Zsh:       { name: 'Zsh',          Icon: Zsh },
+  JS:        { name: 'JavaScript',   Icon: Javascript },
+  Rust:      { name: 'Rust',         Icon: Rust },
+  Wasm:      { name: 'WebAssembly',  Icon: Webassembly },
 } satisfies Record<string, Tech>;
 
 const categories = [
-  { id: "web",       label: "Web" },
-  { id: "desktop",   label: "Desktop" },
-  { id: "tool",      label: "Tool" },
-  { id: "reversing", label: "Reverse Engineering" },
-  { id: "config",    label: "Config" },
+  { id: 'web',       label: 'Web' },
+  { id: 'desktop',   label: 'Desktop' },
+  { id: 'tool',      label: 'Tool' },
+  { id: 'reversing', label: 'Reverse Engineering' },
+  { id: 'config',    label: 'Config' },
 ] as const;
 
-type CategoryId = (typeof categories)[number]["id"];
+type CategoryId = (typeof categories)[number]['id'];
 
 const categoryStyle: Record<CategoryId, string> = {
-  web:       "bg-blue-900/50 text-blue-300",
-  desktop:   "bg-purple-900/50 text-purple-300",
-  tool:      "bg-green-900/50 text-green-300",
-  reversing: "bg-orange-900/50 text-orange-300",
-  config:    "bg-gray-700/80 text-gray-300",
+  web:       'bg-blue-900/50 text-blue-300',
+  desktop:   'bg-purple-900/50 text-purple-300',
+  tool:      'bg-green-900/50 text-green-300',
+  reversing: 'bg-orange-900/50 text-orange-300',
+  config:    'bg-gray-700/80 text-gray-300',
 };
 
 const projects: Array<{
@@ -64,120 +65,120 @@ const projects: Array<{
   tech: Tech[];
 }> = [
   {
-    name: "Miwa.lol",
-    description: "A modern and customizable biolinks website, already used by more than 1,900 users!",
-    link: "https://miwa.lol",
-    image: "https://miwa.lol/images/miwa-256.png",
+    name: 'Miwa.lol',
+    description: 'A modern and customizable biolinks website, already used by more than 1,900 users!',
+    link: 'https://miwa.lol',
+    image: 'https://miwa.lol/images/miwa-256.png',
     repo: null,
-    category: "web",
+    category: 'web',
     tech: [T.NextJS, T.Tailwind, T.Go, T.PG, T.Redis],
   },
   {
-    name: "Tenshii.moe",
-    description: "My personal website, you are currently on it!",
-    link: "https://tenshii.moe",
-    image: "/img/pfp.webp",
-    repo: "https://git.tenshii.moe/Tenshii/tenshii.moe",
-    category: "web",
+    name: 'Tenshii.moe',
+    description: 'My personal website, you are currently on it!',
+    link: 'https://tenshii.moe',
+    image: '/img/pfp.webp',
+    repo: 'https://git.tenshii.moe/Tenshii/tenshii.moe',
+    category: 'web',
     tech: [T.Astro, T.TS, T.Tailwind],
   },
   {
-    name: "switch-wasm",
-    description: "A from-scratch Nintendo Switch emulator: an ARM64 interpreter and GM20B GPU emulation compiled to WebAssembly. Boots homebrew NROs entirely in your browser, nothing is uploaded.",
-    link: "https://tenshii.moe/Switch-Wasm/",
-    image: "https://tenshii.moe/Switch-Wasm/assets/favicon.svg",
-    repo: "https://git.tenshii.moe/Tenshii/Switch-Wasm",
-    category: "reversing",
+    name: 'switch-wasm',
+    description: 'A from-scratch Nintendo Switch emulator: an ARM64 interpreter and GM20B GPU emulation compiled to WebAssembly. Boots homebrew NROs entirely in your browser, nothing is uploaded.',
+    link: 'https://tenshii.moe/Switch-Wasm/',
+    image: 'https://tenshii.moe/Switch-Wasm/assets/favicon.svg',
+    repo: 'https://git.tenshii.moe/Tenshii/Switch-Wasm',
+    category: 'reversing',
     tech: [T.Rust, T.Wasm],
   },
   {
-    name: "Deezer Discord RPC",
-    description: "A Discord RPC for Deezer.",
-    link: "https://github.com/CuteTenshii/deezer-discord-rpc",
-    image: "https://raw.githubusercontent.com/CuteTenshii/deezer-discord-rpc/refs/heads/master/.github/screenshots/rpc.png",
-    repo: "https://github.com/CuteTenshii/deezer-discord-rpc",
-    category: "desktop",
+    name: 'Deezer Discord RPC',
+    description: 'A Discord RPC for Deezer.',
+    link: 'https://github.com/CuteTenshii/deezer-discord-rpc',
+    image: 'https://raw.githubusercontent.com/CuteTenshii/deezer-discord-rpc/refs/heads/master/.github/screenshots/rpc.png',
+    repo: 'https://github.com/CuteTenshii/deezer-discord-rpc',
+    category: 'desktop',
     tech: [T.Electron, T.TS],
   },
   {
-    name: "guns.lol solver",
-    description: "Reverse engineering of the PoW used to record views on guns.lol profile pages. The README includes a detailed explanation of how the PoW works.",
-    link: "https://github.com/CuteTenshii/guns-solver",
+    name: 'guns.lol solver',
+    description: 'Reverse engineering of the PoW used to record views on guns.lol profile pages. The README includes a detailed explanation of how the PoW works.',
+    link: 'https://github.com/CuteTenshii/guns-solver',
     image: null,
-    repo: "https://github.com/CuteTenshii/guns-solver",
-    category: "reversing",
+    repo: 'https://github.com/CuteTenshii/guns-solver',
+    category: 'reversing',
     tech: [T.Go],
   },
   {
-    name: "Crunchyroll Downloader",
-    description: "A Go program to download episodes from Crunchyroll. Merges video and audio segments (and optionally subtitles) into a MKV container.",
-    link: "https://github.com/CuteTenshii/crunchyroll-downloader",
+    name: 'Crunchyroll Downloader',
+    description: 'A Go program to download episodes from Crunchyroll. Merges video and audio segments (and optionally subtitles) into a MKV container.',
+    link: 'https://github.com/CuteTenshii/crunchyroll-downloader',
     image: null,
-    repo: "https://github.com/CuteTenshii/crunchyroll-downloader",
-    category: "tool",
+    repo: 'https://github.com/CuteTenshii/crunchyroll-downloader',
+    category: 'tool',
     tech: [T.Go],
   },
   {
-    name: "dotfiles",
-    description: "My dotfiles for Arch Linux with Hyprland, zsh, kitty... Also includes scripts I made for my VPS.",
-    link: "https://github.com/CuteTenshii/dotfiles",
-    image: "https://raw.githubusercontent.com/CuteTenshii/dotfiles/master/desktop.png",
-    repo: "https://github.com/CuteTenshii/dotfiles",
-    category: "config",
+    name: 'dotfiles',
+    description: 'My dotfiles for Arch Linux with Hyprland, zsh, kitty... Also includes scripts I made for my VPS.',
+    link: 'https://github.com/CuteTenshii/dotfiles',
+    image: 'https://raw.githubusercontent.com/CuteTenshii/dotfiles/master/desktop.png',
+    repo: 'https://github.com/CuteTenshii/dotfiles',
+    category: 'config',
     tech: [T.ArchLinux, T.Zsh],
   },
   {
-    name: "Paradise Bay server",
+    name: 'Paradise Bay server',
     description: 'Reverse-engineering of the custom protocol of the 2015 "Paradise Bay" game.',
-    link: "https://github.com/CuteTenshii/paradise-bay-server",
+    link: 'https://github.com/CuteTenshii/paradise-bay-server',
     image: null,
-    repo: "https://github.com/CuteTenshii/paradise-bay-server",
-    category: "reversing",
+    repo: 'https://github.com/CuteTenshii/paradise-bay-server',
+    category: 'reversing',
     tech: [T.Go],
   },
   {
-    name: "favicon",
-    description: "A Cloudflare Worker that serves a website's favicon from a given URL.",
-    link: "https://github.com/CuteTenshii/favicon",
+    name: 'favicon',
+    description: 'A Cloudflare Worker that serves a website\'s favicon from a given URL.',
+    link: 'https://github.com/CuteTenshii/favicon',
     image: null,
-    repo: "https://github.com/CuteTenshii/favicon",
-    category: "tool",
+    repo: 'https://github.com/CuteTenshii/favicon',
+    category: 'tool',
     tech: [T.TS, T.CF],
   },
   {
-    name: "Deezer Enhancer",
-    description: "A browser extension that enhances the Deezer web player with additional features and improvements. (Abandoned)",
-    link: "https://github.com/CuteTenshii/deezer-enhancer",
+    name: 'Deezer Enhancer',
+    description: 'A browser extension that enhances the Deezer web player with additional features and improvements. (Abandoned)',
+    link: 'https://github.com/CuteTenshii/deezer-enhancer',
     image: null,
-    repo: "https://github.com/CuteTenshii/deezer-enhancer",
-    category: "tool",
+    repo: 'https://github.com/CuteTenshii/deezer-enhancer',
+    category: 'tool',
     tech: [T.TS],
   },
   {
-    name: "Wplace.live Datamining",
-    description: "Datamining for the Wplace.live website. Extracts and renames files since their hashes change with every new build.",
-    link: "https://github.com/CuteTenshii/wplace-datamining",
+    name: 'Wplace.live Datamining',
+    description: 'Datamining for the Wplace.live website. Extracts and renames files since their hashes change with every new build.',
+    link: 'https://github.com/CuteTenshii/wplace-datamining',
     image: null,
-    repo: "https://github.com/CuteTenshii/wplace-datamining",
-    category: "reversing",
+    repo: 'https://github.com/CuteTenshii/wplace-datamining',
+    category: 'reversing',
     tech: [T.JS],
   },
   {
-    name: "guns.lol Datamining",
-    description: "Datamining for the guns.lol website.",
-    link: "https://github.com/CuteTenshii/guns-datamining",
+    name: 'guns.lol Datamining',
+    description: 'Datamining for the guns.lol website.',
+    link: 'https://github.com/CuteTenshii/guns-datamining',
     image: null,
-    repo: "https://github.com/CuteTenshii/guns-datamining",
-    category: "reversing",
+    repo: 'https://github.com/CuteTenshii/guns-datamining',
+    category: 'reversing',
     tech: [T.JS],
   },
   {
-    name: "Burger King FR API",
-    description: "A Node.js wrapper for the internal Burger King France API.",
-    link: "https://github.com/CuteTenshii/burger-king-fr-api",
+    name: 'Burger King FR API',
+    description: 'A Node.js wrapper for the internal Burger King France API.',
+    link: 'https://github.com/CuteTenshii/burger-king-fr-api',
     image: null,
-    repo: "https://github.com/CuteTenshii/burger-king-fr-api",
-    category: "tool",
+    repo: 'https://github.com/CuteTenshii/burger-king-fr-api',
+    category: 'tool',
     tech: [T.JS],
   },
 ];
@@ -191,7 +192,7 @@ const projects: Array<{
   <div class="container mx-auto px-4 py-8 pt-16" id="projects">
     <h2 class="text-3xl font-bold text-center mb-3">Projects</h2>
     <p class="text-center mb-8 text-gray-400">
-      A few projects I've worked on. You can see more on my{" "}
+      A few projects I've worked on. You can see more on my{' '}
       <a href="https://github.com/CuteTenshii" target="_blank" rel="noopener">GitHub</a>.
     </p>
 
@@ -229,31 +230,31 @@ const projects: Array<{
 
   <script>
     function initFilters() {
-      const buttons = document.querySelectorAll<HTMLButtonElement>(".filter-btn");
-      const cards = document.querySelectorAll<HTMLAnchorElement>("[data-category]");
+      const buttons = document.querySelectorAll<HTMLButtonElement>('.filter-btn');
+      const cards = document.querySelectorAll<HTMLAnchorElement>('[data-category]');
       buttons.forEach((btn) => {
-        btn.addEventListener("click", () => {
+        btn.addEventListener('click', () => {
           const filter = btn.dataset.filter;
-          buttons.forEach((b) => b.classList.remove("active"));
-          btn.classList.add("active");
+          buttons.forEach((b) => b.classList.remove('active'));
+          btn.classList.add('active');
           cards.forEach((card) => {
-            card.classList.toggle("hidden", filter !== "all" && card.dataset.category !== filter);
+            card.classList.toggle('hidden', filter !== 'all' && card.dataset.category !== filter);
           });
         });
       });
     }
 
     function formatDate(iso: string) {
-      return new Date(iso).toLocaleDateString("en-US", { month: "short", year: "numeric" });
+      return new Date(iso).toLocaleDateString('en-US', { month: 'short', year: 'numeric' });
     }
 
     async function fetchRepoStats(repoUrl: string) {
       const { host, pathname } = new URL(repoUrl);
-      const [owner, name] = pathname.replace(/^\/|\/$|\.git$/g, "").split("/");
+      const [owner, name] = pathname.replace(/^\/|\/$|\.git$/g, '').split('/');
       if (!owner || !name) return null;
 
       // Anything that isn't GitHub is a Forgejo instance: same endpoint shape, different field names.
-      const isGithub = host === "github.com";
+      const isGithub = host === 'github.com';
       const res = await fetch(isGithub
         ? `https://api.github.com/repos/${owner}/${name}`
         : `https://${host}/api/v1/repos/${owner}/${name}`);
@@ -266,7 +267,7 @@ const projects: Array<{
     }
 
     async function loadRepoStats() {
-      const containers = Array.from(document.querySelectorAll<HTMLDivElement>("[data-repo]"));
+      const containers = Array.from(document.querySelectorAll<HTMLDivElement>('[data-repo]'));
       if (!containers.length) return;
 
       await Promise.all(containers.map(async (el) => {
@@ -274,15 +275,15 @@ const projects: Array<{
           const stats = await fetchRepoStats(el.dataset.repo!);
           if (!stats) return;
 
-          el.querySelector<HTMLSpanElement>("[data-repo-stars]")!.textContent = stats.stars.toLocaleString();
-          el.querySelector<HTMLSpanElement>("[data-repo-updated]")!.textContent = formatDate(stats.updated);
-          el.classList.remove("hidden");
-          el.classList.add("flex");
+          el.querySelector<HTMLSpanElement>('[data-repo-stars]')!.textContent = stats.stars.toLocaleString();
+          el.querySelector<HTMLSpanElement>('[data-repo-updated]')!.textContent = formatDate(stats.updated);
+          el.classList.remove('hidden');
+          el.classList.add('flex');
         } catch {}
       }));
     }
 
     // ClientRouter fires astro:page-load on the initial load too, so this is the only entry point needed.
-    document.addEventListener("astro:page-load", () => { initFilters(); loadRepoStats(); });
+    document.addEventListener('astro:page-load', () => { initFilters(); loadRepoStats(); });
   </script>
 </BaseLayout>

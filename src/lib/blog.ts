@@ -4,7 +4,7 @@ export type BlogPost = CollectionEntry<'blog'>;
 
 /** Every blog post, newest first. */
 export async function getPosts(): Promise<BlogPost[]> {
-  const posts = await getCollection('blog');
+  const posts: BlogPost[] = await getCollection('blog');
   return posts.sort((a, b) => b.data.pubDate.getTime() - a.data.pubDate.getTime());
 }
 

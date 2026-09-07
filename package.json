@@ -6,7 +6,8 @@
     "dev": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
-    "lint": "eslint"
+    "lint": "eslint",
+    "typecheck": "astro check"
   },
   "dependencies": {
     "@astrojs/mdx": "^8.0.0",
@@ -17,8 +18,11 @@
     "simple-icons-astro": "^16.1.0"
   },
   "devDependencies": {
+    "@astrojs/check": "^0.9.10",
+    "@stylistic/eslint-plugin": "^5.10.0",
     "@tailwindcss/vite": "^4.3.3",
     "eslint": "^10.10.0",
+    "eslint-plugin-astro": "^3.1.0",
     "tailwindcss": "^4.3.3",
     "typescript": "6.0.3",
     "typescript-eslint": "^8.69.0"

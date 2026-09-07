@@ -1,6 +1,7 @@
 ---
-import Star from "@lucide/astro/icons/star";
-import Clock from "@lucide/astro/icons/clock";
+import type { AstroComponentFactory } from 'astro/runtime/server/index.js';
+import Star from '@lucide/astro/icons/star';
+import Clock from '@lucide/astro/icons/clock';
 
 interface Props {
   name: string;
@@ -11,7 +12,7 @@ interface Props {
   category: string;
   categoryLabel: string;
   categoryClass: string;
-  tech: { name: string; Icon: any }[];
+  tech: { name: string; Icon: AstroComponentFactory }[];
 }
 
 const { name, description, link, image, repo, category, categoryLabel, categoryClass, tech } = Astro.props;
