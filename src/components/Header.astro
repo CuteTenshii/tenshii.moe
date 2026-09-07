@@ -1,21 +1,21 @@
 ---
 // Trailing slashes match how Astro emits these routes, so a click skips the host's 301.
 const links = [
+  { href: '/', label: 'Home' },
   { href: '/projects/', label: 'Projects' },
   { href: '/blog/', label: 'Blog' },
-  { href: '/#stats', label: 'Programming Stats' },
-  { href: '/#setup', label: 'Setup' },
 ];
 
-// Only the real routes get marked. The hash links point into the homepage, so
-// which one is "current" depends on the scroll position, not the URL.
 const path = Astro.url.pathname.replace(/\/+$/, '');
-const isCurrent = (href: string) =>
-  !href.includes('#') && (path === href.replace(/\/+$/, '') || path.startsWith(href));
+const isCurrent = (href: string) => {
+  const route = href.replace(/\/+$/, '');
+  // Home normalizes to the empty string, which prefixes every path, so it has
+  // to match exactly. The others also own their subpaths: /blog/ marks a post.
+  if (route === '') return path === '';
+  return path === route || path.startsWith(`${route}/`);
+};
 ---
 <header class="sticky top-4 z-50 flex items-center justify-center px-2 text-white">
-  {/* Four destinations no longer fit one row on a ~360px screen, so the bar
-      wraps there and relaxes its radius instead of overflowing. */}
   <nav class="rounded-2xl sm:rounded-full bg-gray-700/50 backdrop-blur shadow-md">
     <ul class="flex flex-wrap justify-center gap-2 p-1" aria-label="Main navigation">
       {links.map(({ href, label }) => (
