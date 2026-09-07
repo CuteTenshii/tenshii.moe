@@ -44,9 +44,11 @@ const canonical = new URL(Astro.url.pathname, Astro.site);
     <script defer is:inline data-domain="tenshii.moe" src="https://s.tenshii.moe/_s/outbound-links.js"></script>
     <ClientRouter />
   </head>
-  <body>
+  <body class="flex min-h-dvh flex-col">
     <Header />
-    <slot />
+    <main class="flex-1">
+      <slot />
+    </main>
     <Footer />
   </body>
 </html>
