@@ -38,9 +38,10 @@ const canonical = new URL(Astro.url.pathname, Astro.site);
     <link rel="icon" href="/favicon.ico" />
     <link rel="alternate" type="application/rss+xml" title="Tenshii's blog" href="/rss.xml" />
     <link rel="sitemap" type="application/xml" href="/sitemap-index.xml" />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=Lato:wght@400;700&display=swap" rel="stylesheet" />
+    {/* Body text and headings on every page, so they should not wait to be
+        discovered inside the stylesheet. The other faces stay lazy. */}
+    <link rel="preload" href="/fonts/inter-400-latin.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href="/fonts/lato-700-latin.woff2" as="font" type="font/woff2" crossorigin />
     <script defer is:inline data-domain="tenshii.moe" src="https://s.tenshii.moe/_s/outbound-links.js"></script>
     <ClientRouter />
   </head>
