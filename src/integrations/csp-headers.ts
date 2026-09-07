@@ -39,8 +39,8 @@ function policy(scriptHashes: string[]): string {
   const directives: Record<string, string[]> = {
     'default-src': ['\'self\''],
     'script-src': ['\'self\'', 'https://s.tenshii.moe', ...scriptHashes],
-    // Shiki colors code blocks, and WakapiStats sizes its bars, through style
-    // attributes, which a hash cannot cover, only 'unsafe-inline'.
+    // Shiki colors code blocks through style attributes, which a hash cannot
+    // cover, only 'unsafe-inline'.
     'style-src': ['\'self\'', '\'unsafe-inline\''],
     // The Google Fonts <link> in BaseLayout never reaches the browser as
     // written: Cloudflare Fonts rewrites it, and the faces, to this origin.
@@ -50,7 +50,6 @@ function policy(scriptHashes: string[]): string {
     'connect-src': [
       '\'self\'',
       'https://s.tenshii.moe', // Plausible
-      'https://wakapi.tenshii.moe', // Programming Stats on the home page
       'https://api.github.com', // stars and last push on /projects
       'https://git.tenshii.moe', // the same, for the Forgejo-hosted repos
     ],
