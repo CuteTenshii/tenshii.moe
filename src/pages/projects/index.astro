@@ -1,22 +1,21 @@
 ---
 import BaseLayout from "@/layouts/BaseLayout.astro";
 import ProjectCard from "@/components/ProjectCard.astro";
-import {
-  Go,
-  Typescript,
-  Nextdotjs,
-  Tailwindcss,
-  Postgresql,
-  Redis,
-  Electron,
-  Cloudflare,
-  Archlinux,
-  Zsh,
-  Astro as AstroIcon,
-  Javascript,
-  Rust,
-  Webassembly,
-} from "simple-icons-astro";
+// Deep-imported one by one: the barrel makes the dev server compile all 3356 icons.
+import Go from "simple-icons-astro/Go";
+import Typescript from "simple-icons-astro/Typescript";
+import Nextdotjs from "simple-icons-astro/Nextdotjs";
+import Tailwindcss from "simple-icons-astro/Tailwindcss";
+import Postgresql from "simple-icons-astro/Postgresql";
+import Redis from "simple-icons-astro/Redis";
+import Electron from "simple-icons-astro/Electron";
+import Cloudflare from "simple-icons-astro/Cloudflare";
+import Archlinux from "simple-icons-astro/Archlinux";
+import Zsh from "simple-icons-astro/Zsh";
+import AstroIcon from "simple-icons-astro/Astro";
+import Javascript from "simple-icons-astro/Javascript";
+import Rust from "simple-icons-astro/Rust";
+import Webassembly from "simple-icons-astro/Webassembly";
 
 type Tech = { name: string; Icon: any };
 

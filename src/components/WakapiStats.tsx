@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from 'react';
-import {
-  SiGo,
-  SiGoland,
-  SiJson,
-  SiMarkdown, SiReact,
-  SiTypescript,
-  SiWebstorm, SiYaml
-} from '@icons-pack/react-simple-icons';
+// Deep-imported one by one: the barrel pulls all ~3400 icons through Vite's SSR graph.
+import SiGo from '@icons-pack/react-simple-icons/icons/SiGo';
+import SiGoland from '@icons-pack/react-simple-icons/icons/SiGoland';
+import SiJson from '@icons-pack/react-simple-icons/icons/SiJson';
+import SiMarkdown from '@icons-pack/react-simple-icons/icons/SiMarkdown';
+import SiReact from '@icons-pack/react-simple-icons/icons/SiReact';
+import SiTypescript from '@icons-pack/react-simple-icons/icons/SiTypescript';
+import SiWebstorm from '@icons-pack/react-simple-icons/icons/SiWebstorm';
+import SiYaml from '@icons-pack/react-simple-icons/icons/SiYaml';
 import VSCodeLogo from '@/components/icons/VSCodeLogo.astro';
 import { LoaderCircle } from 'lucide-react';
 
