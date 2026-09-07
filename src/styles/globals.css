@@ -22,7 +22,17 @@
         background-attachment: fixed;
         background-size: cover;
         background-position: center;
-        filter: blur(10px);
+        /* The photo peaks around rgb(167,161,163), and it is fixed while the
+           page scrolls, so any text can pass over a bright patch. Undimmed,
+           even white text measures 2.5:1 there. Dimming keeps the texture and
+           puts the muted greys back above 4.5:1. */
+        filter: blur(10px) brightness(0.3);
+    }
+
+    a:focus-visible, button:focus-visible {
+        outline: 2px solid theme(colors.blue.300);
+        outline-offset: 2px;
+        border-radius: 4px;
     }
 
     .link {
@@ -44,5 +54,129 @@
 @layer utilities {
     .font-lato {
         font-family: Lato, sans-serif;
+    }
+}
+
+/* Article body, applied to the Markdown/MDX output on /blog/*. */
+@layer components {
+    .article-body {
+        color: theme(colors.gray.200);
+        line-height: 1.75;
+    }
+
+    /* Spacing lives entirely in these three sibling rules, so a heading pulls
+       away from what precedes it and sits close to what it introduces. */
+    .article-body > * + * {
+        margin-top: 1.25em;
+    }
+
+    .article-body > * + :is(h2, h3, h4) {
+        margin-top: 2.25em;
+    }
+
+    .article-body > :is(h2, h3, h4) + * {
+        margin-top: 0.6em;
+    }
+
+    .article-body :is(h2, h3, h4) {
+        font-family: Lato, sans-serif;
+        font-weight: 700;
+        color: theme(colors.white);
+        /* The nav is sticky at top-4, so anchor jumps need to clear it. */
+        scroll-margin-top: 5rem;
+    }
+
+    .article-body h2 {
+        font-size: 1.5rem;
+        padding-bottom: 0.3em;
+        border-bottom: 1px solid theme(colors.gray.700);
+    }
+
+    .article-body h3 {
+        font-size: 1.25rem;
+    }
+
+    .article-body h4 {
+        font-size: 1.0625rem;
+    }
+
+    /* blue-400 rather than the site's blue-500, which measures below the AA
+       minimum for body-sized text against this background. */
+    .article-body a {
+        color: theme(colors.blue.400);
+        text-decoration: underline;
+        text-underline-offset: 3px;
+        transition: color 0.2s ease-in-out;
+    }
+
+    .article-body a:hover {
+        color: theme(colors.blue.300);
+    }
+
+    .article-body :is(ul, ol) {
+        padding-left: 1.5rem;
+    }
+
+    .article-body ul { list-style: disc; }
+    .article-body ol { list-style: decimal; }
+    .article-body li::marker { color: theme(colors.gray.400); }
+    .article-body li + li { margin-top: 0.4em; }
+
+    .article-body :not(pre) > code {
+        background-color: theme(colors.gray.800);
+        color: theme(colors.gray.100);
+        padding: 0.1em 0.25em;
+        border-radius: 4px;
+        font-size: 0.875em;
+    }
+
+    /* Shiki paints its own background and colors; this only handles the box. */
+    .article-body pre {
+        padding: 1rem;
+        border-radius: 8px;
+        border: 1px solid theme(colors.gray.700);
+        overflow-x: auto;
+        font-size: 0.875rem;
+        line-height: 1.6;
+    }
+
+    .article-body blockquote {
+        border-left: 3px solid theme(colors.gray.600);
+        padding-left: 1rem;
+        color: theme(colors.gray.400);
+    }
+
+    .article-body :is(img, video) {
+        border-radius: 8px;
+        max-width: 100%;
+        height: auto;
+    }
+
+    .article-body hr {
+        border-color: theme(colors.gray.700);
+        margin-top: 2.5em;
+        margin-bottom: 2.5em;
+    }
+
+    /* Markdown emits no wrapper around tables, so the table itself has to be
+       the scroll container or a wide one pushes the whole page sideways. */
+    .article-body table {
+        display: block;
+        width: max-content;
+        max-width: 100%;
+        overflow-x: auto;
+        border-collapse: collapse;
+        font-size: 0.9375rem;
+    }
+
+    .article-body :is(th, td) {
+        border: 1px solid theme(colors.gray.700);
+        padding: 0.5rem 0.75rem;
+        text-align: left;
+    }
+
+    .article-body th {
+        background-color: theme(colors.gray.800);
+        color: theme(colors.white);
     }
 }
