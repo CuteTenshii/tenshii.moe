@@ -1,0 +1,23 @@
+---
+// simple-icons ships Forgejo as one flat #FB923C path, but the real mark is
+// two-tone. Traced from the logo the instance serves at /assets/img/logo.svg,
+// with its <style> rules flattened onto the elements so the .orange/.red class
+// names cannot leak into the rest of the document.
+interface Props {
+  size?: number;
+}
+
+const { size = 24 } = Astro.props;
+---
+<svg
+  xmlns="http://www.w3.org/2000/svg" viewBox="0 0 212 212"
+  width={size} height={size} fill="none" aria-hidden="true"
+>
+  <g transform="translate(6 6)">
+    <path d="M58 168V70a50 50 0 0 1 50-50h20" stroke="#f60" stroke-width="25" />
+    <path d="M58 168v-30a50 50 0 0 1 50-50h20" stroke="#d40000" stroke-width="25" />
+    <circle cx="142" cy="20" r="18" stroke="#f60" stroke-width="15" />
+    <circle cx="142" cy="88" r="18" stroke="#d40000" stroke-width="15" />
+    <circle cx="58" cy="180" r="18" stroke="#d40000" stroke-width="15" />
+  </g>
+</svg>

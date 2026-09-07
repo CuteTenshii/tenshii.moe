@@ -1,7 +1,46 @@
 ---
+// Importing from the barrel instead makes the dev server compile all 3356 icons.
+import Github from 'simple-icons-astro/Github';
+import Discord from 'simple-icons-astro/Discord';
+import Forgejo from './icons/Forgejo.astro';
+
 const year = new Date().getFullYear();
+
+// The box is 44px so the tap target clears the minimum even though the mark
+// inside it is 20px.
+const iconLink = 'inline-flex size-11 items-center justify-center rounded-lg transition-colors hover:bg-gray-700/50';
+
+// simple-icons-astro emits its brand fill *after* the layout's own
+// fill="currentColor", and a duplicate attribute loses, so those two have to be
+// tinted through the text color. GitHub's own #181717 would disappear against
+// this background, so its mark takes the white it uses on dark everywhere else.
+// The Forgejo icon carries its own two colors and needs no tint.
+const profiles = [
+  { href: 'https://github.com/CuteTenshii', label: 'GitHub', Icon: Github, tint: 'text-white' },
+  { href: 'https://git.tenshii.moe/Tenshii', label: 'Forgejo', Icon: Forgejo, tint: '' },
+  { href: 'https://discord.com/users/1370735264678281257', label: 'Discord', Icon: Discord, tint: 'text-[#5865F2]' },
+];
 ---
 <footer class="text-center py-4 mt-8 px-4 backdrop-blur-lg">
+  <ul class="mb-2 flex justify-center gap-1" aria-label="My profiles">
+    {profiles.map(({ href, label, Icon, tint }) => (
+      <li>
+        <a href={href} target="_blank" rel="noopener" aria-label={label} class={`${iconLink} ${tint}`}>
+          <Icon size={20} />
+        </a>
+      </li>
+    ))}
+
+    <li>
+      <a href="https://miwa.lol/tenshii" target="_blank" rel="noopener" aria-label="Miwa.lol" class={iconLink}>
+        <img
+          src="https://miwa.lol/images/miwa-48.png" alt="" draggable="false" width={20} height={20}
+          class="size-5"
+        />
+      </a>
+    </li>
+  </ul>
+
   <p class="mb-2">Made with ❤️</p>
 
   <p class="text-gray-400 text-sm">
