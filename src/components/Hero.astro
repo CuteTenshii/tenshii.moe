@@ -1,4 +1,7 @@
 ---
+// Tagged so Miwa's analytics can tell arrivals from this site apart from the
+// footer link and from direct traffic.
+const miwaUrl = 'https://miwa.lol/?utm_source=tenshii.moe&utm_medium=referral&utm_campaign=hero';
 ---
 <div class="relative flex items-center justify-center text-center gap-4 h-[80vh] px-4 max-md:flex-col lg:flex-col">
   <img
@@ -11,9 +14,10 @@
 
     <p>
       I'm building{' '}
-      <a href="https://miwa.lol" target="_blank">
+      <a href={miwaUrl} target="_blank" class="inline-flex items-center gap-1.5 align-middle">
+        {/* The link text already says the name, so the mark is decorative. */}
         <img
-          src="https://miwa.lol/images/miwa-48.png" alt="Miwa.lol logo" class="inline-block size-6 mb-1"
+          src="https://miwa.lol/images/miwa-48.png" alt="" class="size-6"
           draggable="false" width={24} height={24}
         />
         <span>Miwa.lol</span>
