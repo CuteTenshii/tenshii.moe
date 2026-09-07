@@ -13,7 +13,7 @@ interface Props {
 }
 
 const { title, description, ogType = 'website', publishedDate, modifiedDate } = Astro.props;
-const ogImage = '/img/pfp.webp';
+const ogImage = new URL('/img/pfp.webp', Astro.site);
 const canonical = new URL(Astro.url.pathname, Astro.site);
 ---
 <!doctype html>
@@ -32,8 +32,8 @@ const canonical = new URL(Astro.url.pathname, Astro.site);
     {publishedDate && <meta property="article:published_time" content={publishedDate.toISOString()} />}
     {modifiedDate && <meta property="article:modified_time" content={modifiedDate.toISOString()} />}
     <meta name="twitter:card" content="summary" />
-    <meta name="twitter:creator" content="@CuteTenshii" />
-    <meta name="twitter:site" content="@CuteTenshii" />
+    <meta name="twitter:creator" content="@10shii7" />
+    <meta name="twitter:site" content="@10shii7" />
     <meta name="twitter:image" content={ogImage} />
     <link rel="icon" href="/favicon.ico" />
     <link rel="alternate" type="application/rss+xml" title="Tenshii's blog" href="/rss.xml" />
