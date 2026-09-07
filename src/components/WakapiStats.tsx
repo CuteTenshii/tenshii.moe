@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-// Deep-imported one by one: the barrel pulls all ~3400 icons through Vite's SSR graph.
+// Importing from the barrel instead pulls all ~3400 icons through Vite's SSR graph.
 import SiGo from '@icons-pack/react-simple-icons/icons/SiGo';
 import SiGoland from '@icons-pack/react-simple-icons/icons/SiGoland';
 import SiJson from '@icons-pack/react-simple-icons/icons/SiJson';
