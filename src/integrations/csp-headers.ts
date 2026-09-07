@@ -11,6 +11,10 @@ import type { AstroIntegration } from 'astro';
  * Astro's own `security.csp` emits a per-page <meta> tag instead, which
  * breaks <ClientRouter />: it runs the next page's inline scripts without a
  * reload, under the policy the browser applied to the current page.
+ *
+ * Only headers git-pages allowlists survive, and it drops the whole block if
+ * one is not, so adding a header here means verifying the deployed response
+ * still carries the policy.
  */
 export default function cspHeaders(): AstroIntegration {
   return {
@@ -18,26 +22,15 @@ export default function cspHeaders(): AstroIntegration {
     hooks: {
       'astro:build:done': async ({ dir, logger }) => {
         const outDir = fileURLToPath(dir);
-        const { scripts, styles, stylesheets } = await scan(await htmlFiles(outDir));
-        const preload = stylesheets.map((href) => `<${href}>; rel=preload; as=style`).join(', ');
-        const headers = [
-          `  Content-Security-Policy: ${policy(scripts, styles)}`,
-          '  Cross-Origin-Opener-Policy: same-origin',
-          '  Cross-Origin-Resource-Policy: same-origin',
-          `  Permissions-Policy: ${PERMISSIONS_POLICY}`,
-          ...(preload ? [`  Link: ${preload}`] : []),
-        ];
+        const { scripts, styles } = await scan(await htmlFiles(outDir));
+        const header = `  Content-Security-Policy: ${policy(scripts, styles)}`;
 
-        await writeFile(join(outDir, '_headers'), `/*\n${headers.join('\n')}\n`, 'utf8');
-        logger.info(`_headers written, ${scripts.length + styles.length} hash(es), ${stylesheets.length} preload(s)`);
+        await writeFile(join(outDir, '_headers'), `/*\n${header}\n`, 'utf8');
+        logger.info(`_headers written, ${scripts.length + styles.length} hash(es)`);
       },
     },
   };
 }
-
-const PERMISSIONS_POLICY = ['accelerometer', 'autoplay', 'browsing-topics', 'camera', 'display-capture',
-  'encrypted-media', 'fullscreen', 'geolocation', 'gyroscope', 'magnetometer', 'microphone', 'midi',
-  'payment', 'screen-wake-lock', 'usb'].map((feature) => `${feature}=()`).join(', ');
 
 // An origin missing here is an origin the browser refuses, so this list has to
 // be extended alongside the markup.
@@ -81,30 +74,20 @@ function policy(scriptHashes: string[], styleHashes: string[]): string {
 // Anything carrying a src is covered by the origins in script-src instead.
 const inlineScript = /<script(?![^>]*\ssrc=)[^>]*>([\s\S]*?)<\/script>/gi;
 const inlineStyle = /<style[^>]*>([\s\S]*?)<\/style>/gi;
-const stylesheet = /<link[^>]*\brel=["']?stylesheet["']?[^>]*\bhref=["']([^"']+)["']/gi;
 
 const sha256 = (body: string) => `'sha256-${createHash('sha256').update(body, 'utf8').digest('base64')}'`;
 
 async function scan(pages: string[]) {
   const scripts = new Set<string>();
   const styles = new Set<string>();
-  // Only what every page links, since `_headers` has a single `/*` block.
-  let shared: string[] | undefined;
 
   for (const page of pages) {
     const html = await readFile(page, 'utf8');
     for (const [, body] of html.matchAll(inlineScript)) if (body) scripts.add(sha256(body));
     for (const [, body] of html.matchAll(inlineStyle)) if (body) styles.add(sha256(body));
-
-    const linked = [...html.matchAll(stylesheet)].map(([, href]) => href).filter((href) => href.startsWith('/'));
-    shared = shared?.filter((href) => linked.includes(href)) ?? linked;
   }
 
-  return {
-    scripts: [...scripts].sort(),
-    styles: [...styles].sort(),
-    stylesheets: [...new Set(shared)].sort(),
-  };
+  return { scripts: [...scripts].sort(), styles: [...styles].sort() };
 }
 
 async function htmlFiles(dir: string): Promise<string[]> {
