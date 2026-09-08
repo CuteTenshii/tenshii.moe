@@ -15,12 +15,7 @@ const { Content } = await render(post);
 const { title, description, pubDate, updatedDate } = post.data;
 
 const canonical = new URL(Astro.url.pathname, Astro.site);
-const author = {
-  '@type': 'Person',
-  name: 'Tenshii',
-  url: 'https://tenshii.moe',
-  sameAs: ['https://github.com/CuteTenshii', 'https://twitter.com/10shii7'],
-};
+const author = { '@type': 'Person', name: 'Tenshii', url: 'https://tenshii.moe' };
 const blogPosting = {
   '@context': 'https://schema.org',
   '@type': 'BlogPosting',
