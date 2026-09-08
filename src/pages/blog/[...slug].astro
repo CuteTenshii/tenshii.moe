@@ -13,6 +13,26 @@ export const getStaticPaths: GetStaticPaths = async () => {
 const { post } = Astro.props as { post: BlogPost };
 const { Content } = await render(post);
 const { title, description, pubDate, updatedDate } = post.data;
+
+const canonical = new URL(Astro.url.pathname, Astro.site);
+const author = {
+  '@type': 'Person',
+  name: 'Tenshii',
+  url: 'https://tenshii.moe',
+  sameAs: ['https://github.com/CuteTenshii', 'https://twitter.com/10shii7'],
+};
+const blogPosting = {
+  '@context': 'https://schema.org',
+  '@type': 'BlogPosting',
+  headline: title,
+  description,
+  datePublished: pubDate.toISOString(),
+  ...(updatedDate && { dateModified: updatedDate.toISOString() }),
+  author,
+  publisher: { '@type': 'Person', name: 'Tenshii', url: 'https://tenshii.moe' },
+  url: canonical.toString(),
+  mainEntityOfPage: canonical.toString(),
+};
 ---
 <BaseLayout
   title={`${title} - Tenshii.moe`}
@@ -20,6 +40,7 @@ const { title, description, pubDate, updatedDate } = post.data;
   ogType="article"
   publishedDate={pubDate}
   modifiedDate={updatedDate}
+  structuredData={blogPosting}
 >
   <div class="container mx-auto max-w-3xl px-4 py-8 pt-16">
     <article>

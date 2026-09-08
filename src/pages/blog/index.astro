@@ -4,10 +4,26 @@ import { getPosts, readingTimeMinutes, formatPostDate } from '@/lib/blog';
 import Rss from '@lucide/astro/icons/rss';
 
 const posts = await getPosts();
+
+const canonical = new URL(Astro.url.pathname, Astro.site);
+const blogJsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'Blog',
+  name: 'Tenshii\'s blog',
+  url: canonical.toString(),
+  blogPost: posts.map((post) => ({
+    '@type': 'BlogPosting',
+    headline: post.data.title,
+    description: post.data.description,
+    datePublished: post.data.pubDate.toISOString(),
+    url: new URL(`/blog/${post.id}/`, Astro.site).toString(),
+  })),
+};
 ---
 <BaseLayout
   title="Blog - Tenshii.moe"
   description="Notes on the things I build and take apart: Go, Rust, reverse engineering, and whatever else I got stuck on."
+  structuredData={blogJsonLd}
 >
   <div class="container mx-auto max-w-3xl px-4 py-8 pt-16">
     <h1 class="text-3xl font-bold mb-3">Blog</h1>

@@ -10,10 +10,20 @@ interface Props {
   ogType?: 'website' | 'article';
   publishedDate?: Date;
   modifiedDate?: Date;
+  structuredData?: object | object[];
+  ogImage?: string;
 }
 
-const { title, description, ogType = 'website', publishedDate, modifiedDate } = Astro.props;
-const ogImage = new URL('/img/pfp.webp', Astro.site);
+const {
+  title,
+  description,
+  ogType = 'website',
+  publishedDate,
+  modifiedDate,
+  structuredData,
+  ogImage: ogImageProp,
+} = Astro.props;
+const ogImage = ogImageProp ?? new URL('/img/pfp.webp', Astro.site).toString();
 const canonical = new URL(Astro.url.pathname, Astro.site);
 ---
 <!doctype html>
@@ -38,6 +48,7 @@ const canonical = new URL(Astro.url.pathname, Astro.site);
     <link rel="icon" href="/favicon.ico" />
     <link rel="alternate" type="application/rss+xml" title="Tenshii's blog" href="/rss.xml" />
     <link rel="sitemap" type="application/xml" href="/sitemap-index.xml" />
+    {structuredData && <script type="application/ld+json" is:inline set:html={JSON.stringify(structuredData)} />}
     {/* Body text and headings on every page, so they should not wait to be
         discovered inside the stylesheet. The other faces stay lazy. */}
     <link rel="preload" href="/fonts/inter-400-latin.woff2" as="font" type="font/woff2" crossorigin />
