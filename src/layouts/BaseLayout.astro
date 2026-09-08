@@ -11,19 +11,10 @@ interface Props {
   publishedDate?: Date;
   modifiedDate?: Date;
   structuredData?: object | object[];
-  ogImage?: string;
 }
 
-const {
-  title,
-  description,
-  ogType = 'website',
-  publishedDate,
-  modifiedDate,
-  structuredData,
-  ogImage: ogImageProp,
-} = Astro.props;
-const ogImage = ogImageProp ?? new URL('/img/pfp.webp', Astro.site).toString();
+const { title, description, ogType = 'website', publishedDate, modifiedDate, structuredData } = Astro.props;
+const ogImage = new URL('/img/pfp.webp', Astro.site);
 const canonical = new URL(Astro.url.pathname, Astro.site);
 ---
 <!doctype html>
