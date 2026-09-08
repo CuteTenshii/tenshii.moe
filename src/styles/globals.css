@@ -23,11 +23,6 @@
         background-attachment: fixed;
         background-size: cover;
         background-position: center;
-        /* The photo peaks around rgb(167,161,163), and it is fixed while the
-           page scrolls, so any text can pass over a bright patch. Undimmed,
-           even white text measures 2.5:1 there. Dimming keeps the texture and
-           puts the muted greys back above 4.5:1. */
-        filter: blur(10px) brightness(0.3);
     }
 
     a:focus-visible, button:focus-visible {
