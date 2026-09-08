@@ -45,8 +45,7 @@ function policy(scriptHashes: string[], styleHashes: string[]): string {
     // Without this, browsers predating style-src-elem/attr drop to default-src.
     'style-src': ['\'self\'', '\'unsafe-inline\''],
     'font-src': ['\'self\''],
-    // miwa.lol serves the Miwa logo; project screenshots are self-hosted.
-    'img-src': ['\'self\'', 'https://miwa.lol'],
+    'img-src': ['\'self\''],
     'connect-src': [
       '\'self\'',
       'https://s.tenshii.moe', // Plausible
