@@ -52,5 +52,11 @@ async function loadRepoStats() {
   }));
 }
 
+function initProjects() {
+  initFilters();
+  loadRepoStats();
+}
+
 // ClientRouter fires astro:page-load on the initial load too, so this is the only entry point needed.
-document.addEventListener('astro:page-load', () => { initFilters(); loadRepoStats(); });
+document.addEventListener('astro:page-load', initProjects);
+initProjects();
