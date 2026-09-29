@@ -14,7 +14,7 @@ const eslintConfig = defineConfig([
       '@stylistic/semi': ['error', 'always'],
       '@stylistic/quotes': ['error', 'single'],
       '@stylistic/object-curly-spacing': ['error', 'always'],
-      '@stylistic/max-len': ['error', 120],
+      '@stylistic/max-len': ['error', 120, { ignoreStrings: true }],
       '@typescript-eslint/ban-ts-comment': 0,
     }
   },

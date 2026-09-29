@@ -1,74 +1,86 @@
 ---
 import type { AstroComponentFactory } from 'astro/runtime/server/index.js';
+import type { ProjectLink } from '@/lib/projects';
 import Star from '@lucide/astro/icons/star';
 import Clock from '@lucide/astro/icons/clock';
 
 interface Props {
   name: string;
+  slug: string;
   description: string;
-  link: string;
   image: string | null;
   repo: string | null;
+  links: ProjectLink[];
   category: string;
   categoryLabel: string;
   categoryClass: string;
   tech: { name: string; Icon: AstroComponentFactory }[];
 }
 
-const { name, description, link, image, repo, category, categoryLabel, categoryClass, tech } = Astro.props;
+const { name, slug, description, image, repo, links, category, categoryLabel, categoryClass, tech } = Astro.props;
 ---
 
-<a
-  href={link}
-  target="_blank"
-  rel="noopener"
+<article
   data-category={category}
   class="group border border-gray-700 rounded-xl p-5 hover:border-gray-500 bg-gray-800/30 hover:bg-gray-800/60 transition-all duration-200 backdrop-blur-lg flex flex-col gap-3"
 >
-  <div class="flex items-start justify-between gap-3">
-    <div class="flex-1 min-w-0">
-      <div class="flex items-center gap-2 flex-wrap mb-2">
-        <h3 class="text-base font-semibold group-hover:text-white leading-tight">{name}</h3>
-        <span class={`text-xs px-2 py-0.5 rounded-full shrink-0 ${categoryClass}`}>
-          {categoryLabel}
-        </span>
+  <a href={`/projects/${slug}/`} class="flex flex-col gap-3 flex-1 rounded-md focus-visible:outline-2 focus-visible:outline-blue-300">
+    <div class="flex items-start justify-between gap-3">
+      <div class="flex-1 min-w-0">
+        <div class="flex items-center gap-2 flex-wrap mb-2">
+          <h3 class="text-base font-semibold group-hover:text-blue-300 leading-tight">{name}</h3>
+          <span class={`text-xs px-2 py-0.5 rounded-full shrink-0 ${categoryClass}`}>
+            {categoryLabel}
+          </span>
+        </div>
+        <p class="text-gray-400 text-sm leading-relaxed">{description}</p>
       </div>
-      <p class="text-gray-400 text-sm leading-relaxed">{description}</p>
+      {image && (
+        <img
+          src={image}
+          alt={`${name} logo`}
+          draggable="false"
+          width={56}
+          height={56}
+          class="w-14 h-14 rounded-lg object-cover shrink-0"
+        />
+      )}
     </div>
-    {image && (
-      <img
-        src={image}
-        alt={`${name} logo`}
-        draggable="false"
-        width={56}
-        height={56}
-        class="w-14 h-14 rounded-lg object-cover shrink-0"
-      />
+
+    <div class="flex flex-wrap gap-1.5 mt-auto">
+      {tech.map((t) => (
+        <div class="flex items-center gap-1 text-xs text-gray-400 bg-gray-700/60 px-2 py-1 rounded-md">
+          <t.Icon size={11} />
+          <span>{t.name}</span>
+        </div>
+      ))}
+    </div>
+  </a>
+
+  <div class="flex items-center justify-between gap-3 text-xs text-gray-500 pt-2 border-t border-gray-700/50">
+    <div class="flex items-center gap-3">
+      {links.map(({ label, url, Icon, tint }) => {
+        return (
+          <a href={url} target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1.5 rounded-md text-gray-400 transition-colors hover:text-white" aria-label={`${label} for ${name}`} title={label}>
+            <span class={tint}>
+              <Icon size={17} />
+            </span>
+            <span>{label}</span>
+          </a>
+        );
+      })}
+    </div>
+    {repo && (
+      <span class="hidden items-center gap-4" data-repo={repo}>
+        <span class="flex items-center gap-1">
+          <Star size={12} />
+          <span data-repo-stars>–</span>
+        </span>
+        <span class="flex items-center gap-1">
+          <Clock size={12} />
+          <span>Updated </span><span data-repo-updated>–</span>
+        </span>
+      </span>
     )}
   </div>
-
-  <div class="flex flex-wrap gap-1.5 mt-auto">
-    {tech.map((t) => (
-      <div class="flex items-center gap-1 text-xs text-gray-400 bg-gray-700/60 px-2 py-1 rounded-md">
-        <t.Icon size={11} />
-        <span>{t.name}</span>
-      </div>
-    ))}
-  </div>
-
-  {repo && (
-    <div
-      class="hidden items-center gap-4 text-xs text-gray-500 pt-2 border-t border-gray-700/50"
-      data-repo={repo}
-    >
-      <span class="flex items-center gap-1">
-        <Star size={12} />
-        <span data-repo-stars>–</span>
-      </span>
-      <span class="flex items-center gap-1">
-        <Clock size={12} />
-        <span>Updated </span><span data-repo-updated>–</span>
-      </span>
-    </div>
-  )}
-</a>
+</article>
