@@ -1,5 +1,6 @@
 ---
 import type { GetStaticPaths } from 'astro';
+import { getEntry, render } from 'astro:content';
 import ArrowLeft from '@lucide/astro/icons/arrow-left';
 import BaseLayout from '@/layouts/BaseLayout.astro';
 import { categoryStyle, categories, projects, type Project } from '@/lib/projects';
@@ -10,6 +11,8 @@ export const getStaticPaths: GetStaticPaths = () => projects.map((project) => ({
 }));
 
 const { project } = Astro.props as { project: Project };
+const entry = await getEntry('projects', project.slug);
+const Content = entry ? (await render(entry)).Content : null;
 const category = categories.find(({ id }) => id === project.category)!;
 const description = project.description;
 const structuredData = {
@@ -57,9 +60,11 @@ const structuredData = {
         </div>
       </header>
 
-      {project.images.map(({ src, alt }) => (
-        <img src={src} alt={alt} class="mb-8 w-full rounded-lg border border-gray-700/70" loading="lazy" />
-      ))}
+      {Content && (
+        <div class="article-body mb-8">
+          <Content />
+        </div>
+      )}
 
       <section aria-labelledby="built-with">
         <h2 id="built-with" class="mb-4 text-xl font-bold">Built with</h2>
