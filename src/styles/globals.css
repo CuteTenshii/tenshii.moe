@@ -148,6 +148,13 @@
         height: auto;
     }
 
+    .article-body figcaption {
+        margin-top: 0.5rem;
+        font-size: 0.875rem;
+        color: theme(colors.gray.400);
+        text-align: center;
+    }
+
     .article-body hr {
         border-color: theme(colors.gray.700);
         margin-top: 2.5em;
