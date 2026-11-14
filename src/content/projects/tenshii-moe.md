@@ -1,1 +1,1 @@
-![Screenshot of the Tenshii.moe homepage](/img/projects/tenshii-moe-homepage.webp)
+![Screenshot of the Tenshii.moe homepage](./tenshii-moe/tenshii-moe-homepage.webp)
