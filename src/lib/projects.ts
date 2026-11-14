@@ -77,7 +77,7 @@ export const projects: Project[] = [
   {
     name: 'Miwa.lol',
     slug: 'miwa-lol',
-    description: 'A modern and customizable biolinks website, already used by more than 1,900 users!',
+    description: 'A modern and customizable biolinks website, already used by more than 3,000 users!',
     link: 'https://miwa.lol',
     image: '/img/miwa.webp',
     repo: null,
@@ -85,6 +85,7 @@ export const projects: Project[] = [
     tech: [T.NextJS, T.Tailwind, T.TS, T.Go, T.PG, T.Redis],
     links: [
       { label: 'Website', url: 'https://miwa.lol', Icon: ArrowUpRight },
+      { label: 'GitHub', url: 'https://github.com/miwalol', Icon: Github },
       {
         label: 'Discord',
         url: 'https://discord.gg/miwa',

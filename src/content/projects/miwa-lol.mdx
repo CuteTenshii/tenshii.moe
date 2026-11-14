@@ -1,0 +1,86 @@
+import homepage from './miwa-lol/miwa-homepage.webp';
+import profile from './miwa-lol/miwa-profile.webp';
+import dashboard from './miwa-lol/miwa-dashboard.webp';
+import cards from './miwa-lol/miwa-cards.webp';
+import leaderboard from './miwa-lol/miwa-leaderboard.webp';
+import links from './miwa-lol/miwa-links.webp';
+
+Miwa.lol is a link-in-bio platform. You claim a `miwa.lol/username` address and build a fully customizable page around it, as a single link to share instead of a list of social profiles. I am the developer and owner, and it is used by more than 3,000 people.
+
+<figure>
+  <img src={homepage.src} alt="Miwa.lol homepage with the headline, a username claim field, and sample profile cards" width={homepage.width} height={homepage.height} />
+  <figcaption>The homepage, where visitors claim a username</figcaption>
+</figure>
+
+## What it does
+
+- **Profiles:** a full-screen page with your own background, avatar, badges, bio, and social links
+- **Links and cards:** [links](https://help.miwa.lol/links/) shown as platform icons (Discord, X, YouTube, TikTok, Twitch, Steam, Spotify, GitHub, and many more), and [cards](https://help.miwa.lol/cards/) that show live content such as a Discord server with its member and online counts, live Discord presence, a Spotify track, an X profile, a Steam profile, or a music player
+- **Customization:** layouts, fonts, colors, effects, animations, and community templates, with a live preview while you edit
+- **Analytics:** see where your audience comes from and where it goes
+- **Custom domains:** serve your profile from your own domain instead of `miwa.lol/username`
+- **Community:** a public leaderboard, and a comparison with other biolink services
+- **Translations:** the interface is available in 14 languages
+
+<figure>
+  <img src={profile.src} alt="A Miwa.lol profile with an avatar, badges, social links, an Xbox profile card, a Discord server card, and a Discord presence card" width={profile.width} height={profile.height} />
+  <figcaption>An example profile with Xbox and Discord cards</figcaption>
+</figure>
+
+## Customization
+
+Everything is edited from a dashboard that previews the profile live beside the settings. It is split into five areas:
+
+- **General:** the description (with an optional typewriter effect) and the profile card: opacity, blur, font, layout, border, and a tilt effect
+- **Assets:** avatar, background, custom cursor, and audio
+- **Colors & Effects:** colors, glow, cursor and background effects, and an opening animation
+- **SEO & Metadata:** the browser tab title and icon, and how the page looks when shared on Discord, X, and other platforms
+- **Privacy:** hiding views, likes, and join date, and opting out of search engines
+
+Some effects respond to the page itself: beat shake makes the profile card pulse to the beat of your audio or video background, and it stays off for visitors who ask their device to reduce motion.
+
+<figure>
+  <img src={dashboard.src} alt="The Miwa.lol dashboard on the General tab, with settings on the left and a live preview of the profile on the right" width={dashboard.width} height={dashboard.height} />
+  <figcaption>The dashboard, General tab</figcaption>
+</figure>
+
+## Cards
+
+<figure>
+  <img src={cards.src} alt="The Miwa.lol cards dashboard, listing an Xbox profile card, a Discord server card, and a Discord presence card, each with edit and delete buttons" width={cards.width} height={cards.height} />
+  <figcaption>The cards dashboard</figcaption>
+</figure>
+
+[Cards](https://help.miwa.lol/cards/) show live content on a profile: Discord presence, a Spotify playlist, a Discord server, or an Xbox profile with its recent games and achievements. They are created from the dashboard with a single button, then edited, deleted, or reordered by drag and drop. The [Creating a Card](https://help.miwa.lol/cards/creating-a-card/) guide lists every supported platform.
+
+## Links
+
+<figure>
+  <img src={links.src} alt="The Miwa.lol links dashboard, with a searchable grid of platform icons above the list of the user's links" width={links.width} height={links.height} />
+  <figcaption>Adding links from the platform picker</figcaption>
+</figure>
+
+Links are added from a [platform picker](https://help.miwa.lol/links/supported-platforms/) that can be filtered by category (social, dev, games, music, money, entertainment) or searched by name. Each platform gets its own icon on the profile. Any website can also be added as a [custom link](https://help.miwa.lol/links/adding-a-custom-link/), and a link can be plain copyable text instead of a URL.
+
+Once added, links can be reordered by drag and drop, edited, hidden without deleting them, or removed.
+
+## Leaderboard
+
+<figure>
+  <img src={leaderboard.src} alt="The Miwa.lol leaderboard, a ranked table of users with their badges, likes, and views" width={leaderboard.width} height={leaderboard.height} />
+  <figcaption>The public leaderboard, sorted by likes</figcaption>
+</figure>
+
+The [leaderboard](https://help.miwa.lol/getting-started/leaderboard/) ranks users by likes or views, sortable by either column. It is computed live, so a new like or view shows up on the next page load. Users who hide their views or likes (a Premium option) are left out.
+
+## Developers
+
+There is a [public API](https://help.miwa.lol/developers/) that uses API keys and exposes the Get User and Get Cards endpoints. The full [help center](https://help.miwa.lol/) also documents [customization](https://help.miwa.lol/customize/), and a [changelog](https://help.miwa.lol/misc/changelog/) tracks releases.
+
+## Plans
+
+Miwa.lol is free to use. The free plan covers 5 links, 2 cards, and profile analytics. A one-time Premium purchase raises those limits and adds privacy settings, more layouts and effects, custom fonts, branding removal, and a custom domain. Verified status and custom badges are sold separately.
+
+## Stack
+
+The front end is Next.js with TypeScript and Tailwind CSS. The backend API is written in Go, alongside PostgreSQL and Redis.
