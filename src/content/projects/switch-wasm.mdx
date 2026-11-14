@@ -2,17 +2,52 @@ import hbmenu from './switch-wasm/hbmenu.webp';
 import homeMenu from './switch-wasm/home-menu.webp';
 import minecraft from './switch-wasm/minecraft.webp';
 
-<figure>
-  <img src={hbmenu.src} alt="switch-wasm running hbmenu, the Switch homebrew launcher" />
-  <figcaption>hbmenu, the Switch homebrew launcher</figcaption>
-</figure>
+switch-wasm is a Nintendo Switch emulator written from scratch in Rust that runs in the browser, on WebAssembly and WebGPU. Games are loaded from your own files and nothing is uploaded: the emulator, the GPU and the audio all run on your machine, inside the page.
 
-<figure>
-  <img src={homeMenu.src} alt="switch-wasm running the Switch home menu" />
-  <figcaption>The Switch home menu</figcaption>
-</figure>
+## What runs
 
 <figure>
   <img src={minecraft.src} alt="switch-wasm running Minecraft: Nintendo Switch Edition" />
   <figcaption>Minecraft: Nintendo Switch Edition</figcaption>
 </figure>
+
+Retail titles decrypt, mount their RomFS, go through the real Switch SDK start-up and run into their own game loops. Status as of 14 November 2026:
+
+- **Playable:** Minecraft: Nintendo Switch Edition, in-game at 15 to 20 fps
+- **In-game:** Just Dance 2017, 2019 and 2022, where menus navigate and songs play at 10 to 20 fps, and The Legend of Zelda: Echoes of Wisdom, which still has a rendering bug
+- **Menus:** Mario Kart 8 Deluxe and A Short Hike
+- **Boots:** Tomodachi Life: Living the Dream, up to its loading screen
+
+<figure>
+  <img src={homeMenu.src} alt="switch-wasm running the Switch home menu, with an empty game shelf and the row of system icons" />
+  <figcaption>The Switch home menu, in the emulator</figcaption>
+</figure>
+
+The Home Menu itself runs, with settings that can be browsed and changed and the album and profile pages opening as applets.
+
+<figure>
+  <img src={hbmenu.src} alt="switch-wasm running hbmenu v3.6.1, listing the homebrew in the SD card switch folder, with the emulator toolbar above and performance stats below" />
+  <figcaption>hbmenu, the Switch homebrew launcher, in the emulator</figcaption>
+</figure>
+
+Homebrew `.nro` files are the easiest way in. hbmenu, NX-Shell, JKSV, Checkpoint, and a few system information tools all reach their full interface.
+
+## How it works
+
+- **CPU:** an [AArch64](https://en.wikipedia.org/wiki/AArch64) interpreter, with a block translator that turns pre-decoded blocks into [WebAssembly](https://developer.mozilla.org/en-US/docs/WebAssembly) once they are hot ([binary translation](https://en.wikipedia.org/wiki/Binary_translation)). Some retail titles, such as Mario Kart 8 Deluxe, run in 32-bit mode, so AArch32 and Thumb-2 are emulated too, with the Thumb decoder checked against [QEMU](https://github.com/qemu/qemu) on random instruction snippets. Notes: [interpreter](https://git.tenshii.moe/Tenshii/Switch-Wasm/src/branch/master/docs/cpu.md), [translator](https://git.tenshii.moe/Tenshii/Switch-Wasm/src/branch/master/docs/jit.md).
+- **Kernel and services:** a model of the Horizon kernel (threads, scheduling, [SVCs](https://switchbrew.org/wiki/SVC), IPC) and the [system services](https://switchbrew.org/wiki/Services_API) titles ask for, such as [`hid`](https://switchbrew.org/wiki/HID_services) for input, [`nvdrv`](https://switchbrew.org/wiki/NV_services) for the GPU, the shared fonts, logging, and TLS. Most commands a title issues have a real implementation. Notes: [kernel](https://git.tenshii.moe/Tenshii/Switch-Wasm/src/branch/master/docs/kernel.md), [services](https://git.tenshii.moe/Tenshii/Switch-Wasm/src/branch/master/docs/services.md).
+- **GPU:** the [Maxwell](https://en.wikipedia.org/wiki/Maxwell_(microarchitecture)) GPU is emulated, with its shaders translated to [WGSL](https://www.w3.org/TR/WGSL/) and drawn through [WebGPU](https://developer.mozilla.org/en-US/docs/Web/API/WebGPU_API). A software rasterizer serves as the reference, and any draw the GPU backend can't express falls back to it. Frames are drawn straight to the canvas from the device, without being read back to the CPU. Notes: [GPU core](https://git.tenshii.moe/Tenshii/Switch-Wasm/src/branch/master/docs/gpu.md), [WebGPU backend](https://git.tenshii.moe/Tenshii/Switch-Wasm/src/branch/master/docs/gpu-backend.md).
+- **Audio:** the console's [audio services](https://switchbrew.org/wiki/Audio_services) and [Opus](https://en.wikipedia.org/wiki/Opus_(audio_format)) decoding feed a mixer that plays in time with the emulated clock. Titles schedule their video against their audio clock, so releasing buffers early breaks them. Notes: [audio](https://git.tenshii.moe/Tenshii/Switch-Wasm/src/branch/master/docs/audio.md).
+- **Video:** a [VP9](https://en.wikipedia.org/wiki/VP9) decoder written for the emulator's nvdec engine, checked bit for bit against [libvpx](https://github.com/webmproject/libvpx). Notes: [video](https://git.tenshii.moe/Tenshii/Switch-Wasm/src/branch/master/docs/video.md).
+- **Multiple cores:** the console's three cores run on separate [Web Workers](https://developer.mozilla.org/en-US/docs/Web/API/Web_Workers_API) over one shared WebAssembly memory. Notes: [multi-core](https://git.tenshii.moe/Tenshii/Switch-Wasm/src/branch/master/docs/multicore.md).
+- **Containers:** [NCA](https://switchbrew.org/wiki/NCA), [XCI](https://switchbrew.org/wiki/XCI), [RomFS](https://switchbrew.org/wiki/RomFS), [NRO](https://switchbrew.org/wiki/NRO) and [NSO](https://switchbrew.org/wiki/NSO) files, plus NSP packages, including updates and add-on content paired to the right title. Retail titles need the console keys, which you provide. Notes: [formats](https://git.tenshii.moe/Tenshii/Switch-Wasm/src/branch/master/docs/formats.md).
+- **Input:** keyboard and gamepad, plus an on-screen controller on touch devices and touchscreen taps mapped to the console's digitizer. Notes: [frontend](https://git.tenshii.moe/Tenshii/Switch-Wasm/src/branch/master/docs/web.md).
+- **Network:** off by default. A small native relay can be started to let a title open TCP and UDP connections through a single [WebSocket](https://developer.mozilla.org/en-US/docs/Web/API/WebSockets_API). [TLS](https://en.wikipedia.org/wiki/Transport_Layer_Security) stays inside the emulator, so the relay only sees encrypted data. Notes: [relay protocol](https://git.tenshii.moe/Tenshii/Switch-Wasm/src/branch/master/docs/relay.md).
+
+## Debugging tools
+
+The repository comes with [command-line tools](https://git.tenshii.moe/Tenshii/Switch-Wasm/src/branch/master/docs/repro.md) that run a title outside the browser to reproduce a problem: boot it and stop at a frame, take a screenshot as the browser would draw it, trap the code that reads or writes a memory range, and profile where the time goes.
+
+## Acknowledgments
+
+The project builds on the work of [Eden](https://git.eden-emu.dev/eden-emu/eden), [SwitchBrew](https://switchbrew.org), [libnx](https://github.com/switchbrew/libnx), [deko3d](https://github.com/devkitPro/deko3d), [envytools](https://github.com/envytools/envytools), [Mesa and nouveau](https://gitlab.freedesktop.org/mesa/mesa), [hactool](https://github.com/SciresM/hactool), [libtransistor](https://github.com/reswitched/libtransistor), and [libopus](https://opus-codec.org).
