@@ -42,6 +42,7 @@ export const categories = [
   { id: 'web', label: 'Web' },
   { id: 'desktop', label: 'Desktop' },
   { id: 'tool', label: 'Tool' },
+  { id: 'plugin', label: 'Plugin' },
   { id: 'reversing', label: 'Reverse Engineering' },
   { id: 'config', label: 'Config' },
 ] as const;
@@ -50,6 +51,7 @@ export const categoryStyle: Record<CategoryId, string> = {
   web: 'bg-blue-900/50 text-blue-300',
   desktop: 'bg-purple-900/50 text-purple-300',
   tool: 'bg-green-900/50 text-green-300',
+  plugin: 'bg-teal-900/50 text-teal-300',
   reversing: 'bg-orange-900/50 text-orange-300',
   config: 'bg-gray-700/80 text-gray-300',
 };
