@@ -165,7 +165,10 @@ export const projects: Project[] = [
     repo: 'https://github.com/CuteTenshii/deezer-discord-rpc',
     category: 'desktop',
     tech: [T.Electron, T.TS],
-    links: [{ label: 'GitHub', url: 'https://github.com/CuteTenshii/deezer-discord-rpc', Icon: Github }],
+    links: [
+      { label: 'Download', url: 'https://github.com/CuteTenshii/deezer-discord-rpc/releases/latest', Icon: Download },
+      { label: 'GitHub', url: 'https://github.com/CuteTenshii/deezer-discord-rpc', Icon: Github },
+    ],
   },
   {
     name: 'YTM-Swift',
@@ -176,7 +179,10 @@ export const projects: Project[] = [
     repo: 'https://git.tenshii.moe/Tenshii/YTM-Swift',
     category: 'desktop',
     tech: [T.Swift],
-    links: [{ label: 'Forgejo', url: 'https://git.tenshii.moe/Tenshii/YTM-Swift', Icon: Forgejo }],
+    links: [
+      { label: 'Download', url: 'https://git.tenshii.moe/Tenshii/YTM-Swift/releases/latest', Icon: Download },
+      { label: 'Forgejo', url: 'https://git.tenshii.moe/Tenshii/YTM-Swift', Icon: Forgejo },
+    ],
   },
   {
     name: 'guns.lol solver',
@@ -198,7 +204,10 @@ export const projects: Project[] = [
     repo: 'https://github.com/CuteTenshii/crunchyroll-downloader',
     category: 'tool',
     tech: [T.Go],
-    links: [{ label: 'GitHub', url: 'https://github.com/CuteTenshii/crunchyroll-downloader', Icon: Github }],
+    links: [
+      { label: 'Download', url: 'https://github.com/CuteTenshii/crunchyroll-downloader/releases/latest', Icon: Download },
+      { label: 'GitHub', url: 'https://github.com/CuteTenshii/crunchyroll-downloader', Icon: Github },
+    ],
   },
   {
     name: 'dotfiles',
