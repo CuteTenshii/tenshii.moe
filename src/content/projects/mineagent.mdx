@@ -27,9 +27,12 @@ While it works, a box in the top left shows the goal, the current action and the
 - **Get around:** an [A\*](https://en.wikipedia.org/wiki/A*_search_algorithm) pathfinder that sprints, jumps, swims, climbs ladders, opens doors, breaks what's in the way and pillars up. In creative it can fly.
 - **Gather and build:** mine, place blocks, and pick up drops, with the best tool it carries.
 - **Use every workstation:** crafting through the recipe book, furnaces, stonecutter, smithing table, anvil, enchanting table, grindstone, brewing stand, and chests.
+- **Work with other mods:** it's told which installed mods add blocks, items and mobs, and uses their crafting tables, furnaces and other stations.
+  - With [Xaero's Minimap](https://modrinth.com/mod/xaeros-minimap) or [JourneyMap](https://modrinth.com/mod/journeymap) it reads your waypoints and adds new ones, so `go back to my base` works without coordinates.
+  - With [REI](https://modrinth.com/mod/rei) or [JEI](https://modrinth.com/mod/jei) it sees every way an item is made, not just crafting: when `craft` finds no recipe, it's told what makes the item instead, such as a furnace or another mod's machine.
 - **Stay alive:** it fights back when a mob hits it, swims up for air, and tells the model about damage, hunger and harmful effects. If the player dies, it respawns and tells the model where and how, so it can go back for its items.
 - **Look**, on models that accept images: a screenshot of the player's view with the HUD hidden.
-- **Run commands**, only after you turn it on with `/agent commands on`, and only commands the server lets the player use.
+- **Teleport** with `/tp` when the server allows it, and **run other commands** only after you turn them on with `/agent commands on`, and only commands the server lets the player use.
 
 The README lists [every tool](https://github.com/CuteTenshii/MineAgent#what-the-agent-can-do) the model gets and how each one behaves.
 
