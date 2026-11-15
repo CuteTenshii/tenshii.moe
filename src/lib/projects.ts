@@ -129,6 +129,12 @@ export const projects: Project[] = [
     links: [
       { label: 'Website', url: 'https://tenshii.moe/Switch-Wasm/', Icon: ArrowUpRight },
       { label: 'Forgejo', url: 'https://git.tenshii.moe/Tenshii/Switch-Wasm', Icon: Forgejo },
+      {
+        label: 'Discord',
+        url: 'https://discord.gg/uhy2P4vyhE',
+        Icon: Discord,
+        tint: 'text-[#5865F2]',
+      },
     ],
   },
   {
