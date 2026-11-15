@@ -1,0 +1,45 @@
+import walking from './mineagent/walking.webp';
+import mining from './mineagent/mining.webp';
+import attacking from './mineagent/attacking.webp';
+
+MineAgent is a client-side [Fabric](https://fabricmc.net) mod for Minecraft 26.3. You give it an API key for a language model and a goal such as `get 3 iron ingots`, and the model plays your character until the goal is done or it explains why it stopped.
+
+The model plays mostly without seeing the screen. It calls tools that read the world (`observe`, `find_blocks`, `recipes`...) and tools that act in it (`walk_to`, `gather`, `craft`, `smelt`...). Each action runs tick by tick as normal player input, so it works in singleplayer and on servers with nothing installed server-side.
+
+## Using it
+
+Drop the [jar](https://github.com/CuteTenshii/MineAgent/releases/latest) and [Fabric API](https://modrinth.com/mod/fabric-api) in your `mods` folder, enter a key with `/agent key` (typed into a masked field, never into chat), then give it something to do: `/agent goal build a crafting table and a wooden pickaxe`.
+
+While it works, a box in the top left shows the goal, the current action and the tokens spent so far, and the model posts short progress notes in chat. Its path is drawn in the world: the route to the destination, the blocks it will break, and where it will pillar up. You can send it more instructions mid-goal with `/agent say`, or take control back at any time with `/agent stop`. The README has the [full command list](https://github.com/CuteTenshii/MineAgent#commands).
+
+<figure>
+  <img src={walking.src} alt="MineAgent walking to a tree for the goal 'get some wood': the status box at the top left, a cyan path line to a green outlined destination block, and the agent's tool calls in chat" />
+  <figcaption>Walking to the nearest tree, with its path drawn in the world</figcaption>
+</figure>
+
+<figure>
+  <img src={mining.src} alt="MineAgent looking up at an oak log it is mining, with the status box reading 'gathering #minecraft:logs (4/20): mining oak_log'" />
+  <figcaption>Mining logs, 4 of the 20 it planned to gather</figcaption>
+</figure>
+
+## What it can do
+
+- **Get around:** an [A\*](https://en.wikipedia.org/wiki/A*_search_algorithm) pathfinder that sprints, jumps, swims, climbs ladders, opens doors, breaks what's in the way and pillars up. In creative it can fly.
+- **Gather and build:** mine, place blocks, and pick up drops, with the best tool it carries.
+- **Use every workstation:** crafting through the recipe book, furnaces, stonecutter, smithing table, anvil, enchanting table, grindstone, brewing stand, and chests.
+- **Stay alive:** it fights back when a mob hits it, swims up for air, and tells the model about damage, hunger and harmful effects. If the player dies, it respawns and tells the model where and how, so it can go back for its items.
+- **Look**, on models that accept images: a screenshot of the player's view with the HUD hidden.
+- **Run commands**, only after you turn it on with `/agent commands on`, and only commands the server lets the player use.
+
+The README lists [every tool](https://github.com/CuteTenshii/MineAgent#what-the-agent-can-do) the model gets and how each one behaves.
+
+<figure>
+  <img src={attacking.src} alt="MineAgent attacking a pig for the goal 'get a sword and go kill mobs', with a crafted sword in the hotbar and chat showing its previous kill" />
+  <figcaption>Hunting with the sword it crafted, right after its first kill</figcaption>
+</figure>
+
+## Providers
+
+Anthropic is called through the Messages API, with prompt caching. OpenAI, Gemini, DeepSeek, Mistral, Groq, xAI, OpenRouter and [Ollama](https://ollama.com) all go through the OpenAI Chat Completions API, and any other service that speaks it works with a custom base URL. Both use the JDK's HTTP client and the Gson library Minecraft already ships, so the mod has no bundled dependencies. The [provider table](https://github.com/CuteTenshii/MineAgent#providers) gives each one's default model and key variable.
+
+Long goals can use a lot of tokens: a goal pauses after 200 model turns and waits for you to continue it.

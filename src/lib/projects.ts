@@ -15,10 +15,13 @@ import Swift from 'simple-icons-astro/Swift';
 import Rust from 'simple-icons-astro/Rust';
 import Webassembly from 'simple-icons-astro/Webassembly';
 import Cplusplus from 'simple-icons-astro/Cplusplus';
+import Openjdk from 'simple-icons-astro/Openjdk';
 import Github from 'simple-icons-astro/Github';
 import Discord from 'simple-icons-astro/Discord';
 import ArrowUpRight from '@lucide/astro/icons/arrow-up-right';
+import Download from '@lucide/astro/icons/download';
 import Forgejo from '@/components/icons/Forgejo.astro';
+import Fabric from '@/components/icons/Fabric.astro';
 
 type Tech = { name: string; Icon: AstroComponentFactory };
 const T = {
@@ -38,6 +41,8 @@ const T = {
   Rust: { name: 'Rust', Icon: Rust },
   Wasm: { name: 'WebAssembly', Icon: Webassembly },
   Cpp: { name: 'C++', Icon: Cplusplus },
+  Java: { name: 'Java', Icon: Openjdk },
+  Fabric: { name: 'Fabric', Icon: Fabric },
 } satisfies Record<string, Tech>;
 
 export const categories = [
@@ -61,7 +66,7 @@ export const categoryStyle: Record<CategoryId, string> = {
 export type ProjectLink = {
   label: string;
   url: string;
-  Icon: typeof Github | typeof Discord | typeof ArrowUpRight | typeof Forgejo;
+  Icon: typeof Github | typeof Discord | typeof ArrowUpRight | typeof Download | typeof Forgejo;
   tint?: string;
 };
 
@@ -136,6 +141,20 @@ export const projects: Project[] = [
     category: 'plugin',
     tech: [T.Cpp],
     links: [{ label: 'Forgejo', url: 'https://git.tenshii.moe/Tenshii/XeProxy', Icon: Forgejo }],
+  },
+  {
+    name: 'MineAgent',
+    slug: 'mineagent',
+    description: 'A client-side Fabric mod that lets a language model (Claude, GPT, Gemini, a local model through Ollama...) play your Minecraft character until it completes the goal you gave it.',
+    link: 'https://github.com/CuteTenshii/MineAgent',
+    image: null,
+    repo: 'https://github.com/CuteTenshii/MineAgent',
+    category: 'plugin',
+    tech: [T.Java, T.Fabric],
+    links: [
+      { label: 'Download', url: 'https://github.com/CuteTenshii/MineAgent/releases/latest', Icon: Download },
+      { label: 'GitHub', url: 'https://github.com/CuteTenshii/MineAgent', Icon: Github },
+    ],
   },
   {
     name: 'Deezer Discord RPC',
