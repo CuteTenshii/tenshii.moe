@@ -14,6 +14,7 @@ import Javascript from 'simple-icons-astro/Javascript';
 import Swift from 'simple-icons-astro/Swift';
 import Rust from 'simple-icons-astro/Rust';
 import Webassembly from 'simple-icons-astro/Webassembly';
+import Cplusplus from 'simple-icons-astro/Cplusplus';
 import Github from 'simple-icons-astro/Github';
 import Discord from 'simple-icons-astro/Discord';
 import ArrowUpRight from '@lucide/astro/icons/arrow-up-right';
@@ -36,6 +37,7 @@ const T = {
   Swift: { name: 'Swift', Icon: Swift },
   Rust: { name: 'Rust', Icon: Rust },
   Wasm: { name: 'WebAssembly', Icon: Webassembly },
+  Cpp: { name: 'C++', Icon: Cplusplus },
 } satisfies Record<string, Tech>;
 
 export const categories = [
@@ -123,6 +125,17 @@ export const projects: Project[] = [
       { label: 'Website', url: 'https://tenshii.moe/Switch-Wasm/', Icon: ArrowUpRight },
       { label: 'Forgejo', url: 'https://git.tenshii.moe/Tenshii/Switch-Wasm', Icon: Forgejo },
     ],
+  },
+  {
+    name: 'XeProxy',
+    slug: 'xeproxy',
+    description: 'A DashLaunch plugin for the Xbox 360 that hooks the console\'s network layer to rewrite DNS, redirect traffic or tunnel it through an HTTP or SOCKS5 proxy, all from an ini file. Also lets XHttp accept a MITM proxy\'s TLS certificate.',
+    link: 'https://git.tenshii.moe/Tenshii/XeProxy',
+    image: null,
+    repo: 'https://git.tenshii.moe/Tenshii/XeProxy',
+    category: 'plugin',
+    tech: [T.Cpp],
+    links: [{ label: 'Forgejo', url: 'https://git.tenshii.moe/Tenshii/XeProxy', Icon: Forgejo }],
   },
   {
     name: 'Deezer Discord RPC',
