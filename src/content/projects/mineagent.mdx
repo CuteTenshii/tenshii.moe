@@ -8,9 +8,11 @@ The model plays mostly without seeing the screen. It calls tools that read the w
 
 ## Using it
 
-Drop the [jar](https://github.com/CuteTenshii/MineAgent/releases/latest) and [Fabric API](https://modrinth.com/mod/fabric-api) in your `mods` folder, enter a key with `/agent key` (typed into a masked field, never into chat), then give it something to do: `/agent goal build a crafting table and a wooden pickaxe`.
+1. Put the [jar](https://github.com/CuteTenshii/MineAgent/releases/latest) and [Fabric API](https://modrinth.com/mod/fabric-api) in your `mods` folder.
+2. Pick a provider with `/agent config`, then enter its key with `/agent key`.
+3. Give it a goal: `/agent goal build a crafting table and a wooden pickaxe`.
 
-While it works, a box in the top left shows the goal, the current action and the tokens spent so far, and the model posts short progress notes in chat. Its path is drawn in the world: the route to the destination, the blocks it will break, and where it will pillar up. You can send it more instructions mid-goal with `/agent say`, or take control back at any time with `/agent stop`. The README has the [full command list](https://github.com/CuteTenshii/MineAgent#commands).
+While it works, a box on screen shows the current action and the tokens spent, and its path is drawn in the world. Add instructions with `/agent say`, or take control back with `/agent stop`. If it needs a decision, it asks in chat and waits for your answer. The README has the [full command list](https://github.com/CuteTenshii/MineAgent#commands).
 
 <figure>
   <img src={walking.src} alt="MineAgent walking to a tree for the goal 'get some wood': the status box at the top left, a cyan path line to a green outlined destination block, and the agent's tool calls in chat" />
@@ -32,7 +34,8 @@ While it works, a box in the top left shows the goal, the current action and the
   - With [REI](https://modrinth.com/mod/rei) or [JEI](https://modrinth.com/mod/jei) it sees every way an item is made, not just crafting: when `craft` finds no recipe, it's told what makes the item instead, such as a furnace or another mod's machine.
 - **Stay alive:** it fights back when a mob hits it, swims up for air, and tells the model about damage, hunger and harmful effects. If the player dies, it respawns and tells the model where and how, so it can go back for its items.
 - **Look**, on models that accept images: a screenshot of the player's view with the HUD hidden.
-- **Teleport** with `/tp` when the server allows it, and **run other commands** only after you turn them on with `/agent commands on`, and only commands the server lets the player use.
+- **Read the wiki:** it looks up a [minecraft.wiki](https://minecraft.wiki) page and reads its introduction or one section, such as Obtaining. You can turn this off in the settings.
+- **Teleport** with `/tp` when the server allows it, and **run other commands** only after you turn on "Allow server commands" in the settings, and only commands the server lets the player use.
 
 The README lists [every tool](https://github.com/CuteTenshii/MineAgent#what-the-agent-can-do) the model gets and how each one behaves.
 
@@ -43,6 +46,6 @@ The README lists [every tool](https://github.com/CuteTenshii/MineAgent#what-the-
 
 ## Providers
 
-Anthropic is called through the Messages API, with prompt caching. OpenAI, Gemini, DeepSeek, Mistral, Groq, xAI, OpenRouter and [Ollama](https://ollama.com) all go through the OpenAI Chat Completions API, and any other service that speaks it works with a custom base URL. Both use the JDK's HTTP client and the Gson library Minecraft already ships, so the mod has no bundled dependencies. The [provider table](https://github.com/CuteTenshii/MineAgent#providers) gives each one's default model and key variable.
+Anthropic is called through the Messages API, with prompt caching. OpenAI, Gemini, DeepSeek, Mistral, Groq, xAI, OpenRouter and [Ollama](https://ollama.com) all go through the OpenAI Chat Completions API, and any other service that speaks it works with a custom base URL. Both use the JDK's HTTP client and the Gson library Minecraft already ships. The only library bundled in the jar is [Cloth Config](https://modrinth.com/mod/cloth-config), for the settings screen. The [provider table](https://github.com/CuteTenshii/MineAgent#providers) gives each one's default model and key variable.
 
 Long goals can use a lot of tokens: a goal pauses after 200 model turns and waits for you to continue it.
