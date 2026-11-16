@@ -1,0 +1,19 @@
+---
+// simple-icons has no wgpu mark. Redrawn from the mark in gfx-rs/wgpu's logo.png,
+// without the "gpu" wordmark, which is unreadable at tag size.
+interface Props {
+  size?: number;
+}
+
+const { size = 24 } = Astro.props;
+---
+<svg
+  xmlns="http://www.w3.org/2000/svg" viewBox="180 35 640 533"
+  width={(size * 640) / 533} height={size} aria-hidden="true"
+>
+  <path fill="#ee6c0c" d="M287 35L420 248L180 568Z" />
+  <path fill="#2b8bee" d="M713 35L820 568L580 248Z" />
+  <path fill="#f8d24e" d="M180 568L420 248L500 378L393 568Z" />
+  <path fill="#8fd3f4" d="M820 568L580 248L500 378L607 568Z" />
+  <path fill="#86b23a" d="M420 248L500 142L580 248L500 378Z" />
+</svg>

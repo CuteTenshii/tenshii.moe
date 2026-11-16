@@ -22,6 +22,7 @@ import ArrowUpRight from '@lucide/astro/icons/arrow-up-right';
 import Download from '@lucide/astro/icons/download';
 import Forgejo from '@/components/icons/Forgejo.astro';
 import Fabric from '@/components/icons/Fabric.astro';
+import Wgpu from '@/components/icons/Wgpu.astro';
 
 type Tech = { name: string; Icon: AstroComponentFactory };
 const T = {
@@ -43,6 +44,7 @@ const T = {
   Cpp: { name: 'C++', Icon: Cplusplus },
   Java: { name: 'Java', Icon: Openjdk },
   Fabric: { name: 'Fabric', Icon: Fabric },
+  Wgpu: { name: 'wgpu', Icon: Wgpu },
 } satisfies Record<string, Tech>;
 
 export const categories = [
@@ -106,12 +108,12 @@ export const projects: Project[] = [
   {
     name: 'switch-wasm',
     slug: 'switch-wasm',
-    description: 'A from-scratch Nintendo Switch emulator: an ARM64 interpreter and GM20B GPU emulation compiled to WebAssembly. Boots homebrew NROs entirely in your browser, nothing is uploaded.',
+    description: 'A from-scratch Nintendo Switch emulator in Rust, running in the browser on WebAssembly and WebGPU. Plays retail titles like Just Dance and Minecraft, and nothing is uploaded.',
     link: 'https://tenshii.moe/Switch-Wasm/',
     image: '/img/switch-wasm.svg',
     repo: 'https://git.tenshii.moe/Tenshii/Switch-Wasm',
     category: 'reversing',
-    tech: [T.Rust, T.Wasm],
+    tech: [T.Rust, T.Wasm, T.Wgpu],
     links: [
       { label: 'Website', url: 'https://tenshii.moe/Switch-Wasm/', Icon: ArrowUpRight },
       { label: 'Forgejo', url: 'https://git.tenshii.moe/Tenshii/Switch-Wasm', Icon: Forgejo },
