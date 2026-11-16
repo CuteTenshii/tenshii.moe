@@ -11,12 +11,14 @@ switch-wasm is a Nintendo Switch emulator written from scratch in Rust that runs
   <figcaption>Minecraft: Nintendo Switch Edition</figcaption>
 </figure>
 
-Retail titles decrypt, mount their RomFS, go through the real Switch SDK start-up and run into their own game loops. Status as of 14 November 2026:
+Retail titles decrypt, mount their RomFS, go through the real Switch SDK start-up and run into their own game loops. Status as of 15 November 2026:
 
-- **Playable:** Minecraft: Nintendo Switch Edition, in-game at 15 to 20 fps
-- **In-game:** Just Dance 2017, 2019 and 2022, where menus navigate and songs play at 10 to 20 fps, and The Legend of Zelda: Echoes of Wisdom, which still has a rendering bug
-- **Menus:** Mario Kart 8 Deluxe and A Short Hike
+- **Playable:** Just Dance 2017 and 2022 at a stable 60 fps, Just Dance 2019 at 40 to 50 fps with small audio stutters, and Minecraft: Nintendo Switch Edition at 30 to 40 fps
+- **In-game:** The Legend of Zelda: Echoes of Wisdom, which still has a rendering bug
+- **Menus:** Mario Kart 8 Deluxe, whose frame rate drops too low to play from character selection on, Persona 5 Royal, which reaches its main menu at about 6 seconds a frame, and A Short Hike
 - **Boots:** Tomodachi Life: Living the Dream, up to its loading screen
+
+The [compatibility list](https://git.tenshii.moe/Tenshii/Switch-Wasm/src/branch/master/docs/compat.md) has every tested title and homebrew, with title IDs, versions and how far each one gets.
 
 <figure>
   <img src={homeMenu.src} alt="switch-wasm running the Switch home menu, with an empty game shelf and the row of system icons" />
