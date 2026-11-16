@@ -1,5 +1,6 @@
 import hbmenu from './switch-wasm/hbmenu.webp';
 import homeMenu from './switch-wasm/home-menu.webp';
+import justDance2022 from './switch-wasm/just-dance-2022.webp';
 import minecraft from './switch-wasm/minecraft.webp';
 
 switch-wasm is a Nintendo Switch emulator written from scratch in Rust that runs in the browser, on WebAssembly and WebGPU. Games are loaded from your own files and nothing is uploaded: the emulator, the GPU and the audio all run on your machine, inside the page.
@@ -21,6 +22,11 @@ Retail titles decrypt, mount their RomFS, go through the real Switch SDK start-u
 The [compatibility list](https://git.tenshii.moe/Tenshii/Switch-Wasm/src/branch/master/docs/compat.md) has every tested title and homebrew, with title IDs, versions and how far each one gets.
 
 <figure>
+  <img src={justDance2022.src} alt="switch-wasm running Just Dance 2022 mid-song, with three dancers, the lyrics and move cards on screen, and the emulator at 55.7 fps" />
+  <figcaption>Just Dance 2022, mid-song</figcaption>
+</figure>
+
+<figure>
   <img src={homeMenu.src} alt="switch-wasm running the Switch home menu, with an empty game shelf and the row of system icons" />
   <figcaption>The Switch home menu, in the emulator</figcaption>
 </figure>
@@ -36,7 +42,7 @@ Homebrew `.nro` files are the easiest way in. hbmenu, NX-Shell, JKSV, Checkpoint
 
 ## How it works
 
-- **CPU:** an [AArch64](https://en.wikipedia.org/wiki/AArch64) interpreter, with a block translator that turns pre-decoded blocks into [WebAssembly](https://developer.mozilla.org/en-US/docs/WebAssembly) once they are hot ([binary translation](https://en.wikipedia.org/wiki/Binary_translation)). Some retail titles, such as Mario Kart 8 Deluxe, run in 32-bit mode, so AArch32 and Thumb-2 are emulated too, with the Thumb decoder checked against [QEMU](https://github.com/qemu/qemu) on random instruction snippets. Notes: [interpreter](https://git.tenshii.moe/Tenshii/Switch-Wasm/src/branch/master/docs/cpu.md), [translator](https://git.tenshii.moe/Tenshii/Switch-Wasm/src/branch/master/docs/jit.md).
+- **CPU:** an [AArch64](https://en.wikipedia.org/wiki/AArch64) interpreter, with a block translator that turns pre-decoded blocks into [WebAssembly](https://developer.mozilla.org/en-US/docs/WebAssembly) once they are hot ([binary translation](https://en.wikipedia.org/wiki/Binary_translation)). Some retail titles, such as Mario Kart 8 Deluxe, run in 32-bit mode, so AArch32 and Thumb-2 are emulated too, with the Thumb decoder checked against [QEMU](https://github.com/qemu/qemu) on random instruction snippets. Notes: [interpreter](https://git.tenshii.moe/Tenshii/Switch-Wasm/src/branch/master/docs/cpu.md), [A64 decode traps](https://git.tenshii.moe/Tenshii/Switch-Wasm/src/branch/master/docs/a64-decode.md), [translator](https://git.tenshii.moe/Tenshii/Switch-Wasm/src/branch/master/docs/jit.md).
 - **Kernel and services:** a model of the Horizon kernel (threads, scheduling, [SVCs](https://switchbrew.org/wiki/SVC), IPC) and the [system services](https://switchbrew.org/wiki/Services_API) titles ask for, such as [`hid`](https://switchbrew.org/wiki/HID_services) for input, [`nvdrv`](https://switchbrew.org/wiki/NV_services) for the GPU, the shared fonts, logging, and TLS. Most commands a title issues have a real implementation. Notes: [kernel](https://git.tenshii.moe/Tenshii/Switch-Wasm/src/branch/master/docs/kernel.md), [services](https://git.tenshii.moe/Tenshii/Switch-Wasm/src/branch/master/docs/services.md).
 - **GPU:** the [Maxwell](https://en.wikipedia.org/wiki/Maxwell_(microarchitecture)) GPU is emulated, with its shaders translated to [WGSL](https://www.w3.org/TR/WGSL/) and drawn through [WebGPU](https://developer.mozilla.org/en-US/docs/Web/API/WebGPU_API). A software rasterizer serves as the reference, and any draw the GPU backend can't express falls back to it. Frames are drawn straight to the canvas from the device, without being read back to the CPU. Notes: [GPU core](https://git.tenshii.moe/Tenshii/Switch-Wasm/src/branch/master/docs/gpu.md), [WebGPU backend](https://git.tenshii.moe/Tenshii/Switch-Wasm/src/branch/master/docs/gpu-backend.md).
 - **Audio:** the console's [audio services](https://switchbrew.org/wiki/Audio_services) and [Opus](https://en.wikipedia.org/wiki/Opus_(audio_format)) decoding feed a mixer that plays in time with the emulated clock. Titles schedule their video against their audio clock, so releasing buffers early breaks them. Notes: [audio](https://git.tenshii.moe/Tenshii/Switch-Wasm/src/branch/master/docs/audio.md).
@@ -48,7 +54,7 @@ Homebrew `.nro` files are the easiest way in. hbmenu, NX-Shell, JKSV, Checkpoint
 
 ## Debugging tools
 
-The repository comes with [command-line tools](https://git.tenshii.moe/Tenshii/Switch-Wasm/src/branch/master/docs/repro.md) that run a title outside the browser to reproduce a problem: boot it and stop at a frame, take a screenshot as the browser would draw it, trap the code that reads or writes a memory range, and profile where the time goes.
+The repository comes with [command-line tools](https://git.tenshii.moe/Tenshii/Switch-Wasm/src/branch/master/docs/repro.md) that run a title outside the browser to reproduce a problem: boot it and stop at a frame, take a screenshot as the browser would draw it, trap the code that reads or writes a memory range, and profile where the time goes. A [browser runner](https://git.tenshii.moe/Tenshii/Switch-Wasm/src/branch/master/docs/tooling.md#tools-browser_boot-mjs) does the same inside Chromium: it boots a title with WebGPU on, drives it with scripted button presses to reach a later screen, and saves the console, screenshots and a performance trace.
 
 ## Acknowledgments
 
