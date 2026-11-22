@@ -4,6 +4,7 @@ import { render } from 'astro:content';
 import BaseLayout from '@/layouts/BaseLayout.astro';
 import { getPosts, readingTimeMinutes, formatPostDate, type BlogPost } from '@/lib/blog';
 import ArrowLeft from '@lucide/astro/icons/arrow-left';
+import { SITE_ACCENT, escapeMarkdown, linkButton, separator, text, thumbnail, type ComponentEmbed } from '@/lib/discord-embed';
 
 export const getStaticPaths: GetStaticPaths = async () => {
   const posts = await getPosts();
@@ -28,6 +29,28 @@ const blogPosting = {
   url: canonical.toString(),
   mainEntityOfPage: canonical.toString(),
 };
+
+const published = `<t:${Math.floor(pubDate.getTime() / 1000)}:D>`;
+const updated = updatedDate ? ` · updated <t:${Math.floor(updatedDate.getTime() / 1000)}:D>` : '';
+const discordEmbed: ComponentEmbed = {
+  component: {
+    type: 17,
+    accent_color: SITE_ACCENT,
+    components: [
+      {
+        type: 9,
+        components: [
+          text(`## [${escapeMarkdown(title)}](${canonical})`),
+          text(escapeMarkdown(description)),
+          text(`-# ${published} · ${readingTimeMinutes(post.body)} min read${updated}`),
+        ],
+        accessory: thumbnail(new URL('/img/pfp.webp', Astro.site), 'Tenshii'),
+      },
+      separator(),
+      { type: 1, components: [linkButton('Read post', canonical)] },
+    ],
+  },
+};
 ---
 <BaseLayout
   title={`${title} - Tenshii.moe`}
@@ -36,6 +59,7 @@ const blogPosting = {
   publishedDate={pubDate}
   modifiedDate={updatedDate}
   structuredData={blogPosting}
+  discordEmbed={discordEmbed}
 >
   <div class="container mx-auto max-w-3xl px-4 py-8 pt-16">
     <article>

@@ -4,6 +4,10 @@ import { getEntry, render } from 'astro:content';
 import ArrowLeft from '@lucide/astro/icons/arrow-left';
 import BaseLayout from '@/layouts/BaseLayout.astro';
 import { categoryStyle, categories, projects, type Project } from '@/lib/projects';
+import {
+  SITE_ACCENT, actionRows, escapeMarkdown, isEmbeddableMedia, linkButton, separator, text, thumbnail,
+  type ComponentEmbed,
+} from '@/lib/discord-embed';
 
 export const getStaticPaths: GetStaticPaths = () => projects.map((project) => ({
   params: { project: project.slug },
@@ -23,9 +27,38 @@ const structuredData = {
   applicationCategory: category.label,
   url: project.link,
 };
+
+const canonical = new URL(Astro.url.pathname, Astro.site);
+const projectImage = project.image && new URL(project.image, Astro.site);
+// Discord cannot unfurl SVG logos, so those fall back to the profile picture.
+const embedThumbnail = projectImage && isEmbeddableMedia(projectImage)
+  ? thumbnail(projectImage, `${project.name} logo`)
+  : thumbnail(new URL('/img/pfp.webp', Astro.site), 'Tenshii');
+const discordEmbed: ComponentEmbed = {
+  component: {
+    type: 17,
+    accent_color: SITE_ACCENT,
+    components: [
+      {
+        type: 9,
+        components: [
+          text(`## [${escapeMarkdown(project.name)}](${canonical})`),
+          text(escapeMarkdown(description)),
+          text(`-# ${escapeMarkdown(category.label)} · ${project.tech.map(({ name }) => escapeMarkdown(name)).join(', ')}`),
+        ],
+        accessory: embedThumbnail,
+      },
+      separator(),
+      ...actionRows([
+        linkButton('View project', canonical),
+        ...project.links.map(({ label, url }) => linkButton(label, url)),
+      ]),
+    ],
+  },
+};
 ---
 
-<BaseLayout title={`${project.name} - Projects - Tenshii.moe`} description={description} structuredData={structuredData}>
+<BaseLayout title={`${project.name} - Projects - Tenshii.moe`} description={description} structuredData={structuredData} discordEmbed={discordEmbed}>
   <div class="container mx-auto max-w-3xl px-4 py-8 pt-16">
     <a href="/projects/" class="inline-flex items-center gap-2 text-sm text-gray-400 transition-colors hover:text-white">
       <ArrowLeft size={15} /> All projects
