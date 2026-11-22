@@ -24,10 +24,11 @@ import Forgejo from '@/components/icons/Forgejo.astro';
 import Fabric from '@/components/icons/Fabric.astro';
 import Wgpu from '@/components/icons/Wgpu.astro';
 
-type Tech = { name: string; Icon: AstroComponentFactory };
+// `language` marks what schema.org's programmingLanguage takes, as opposed to frameworks and platforms.
+type Tech = { name: string; Icon: AstroComponentFactory; language?: true };
 const T = {
-  Go: { name: 'Go', Icon: Go },
-  TS: { name: 'TypeScript', Icon: Typescript },
+  Go: { name: 'Go', Icon: Go, language: true },
+  TS: { name: 'TypeScript', Icon: Typescript, language: true },
   NextJS: { name: 'Next.js', Icon: Nextdotjs },
   Tailwind: { name: 'Tailwind CSS', Icon: Tailwindcss },
   PG: { name: 'PostgreSQL', Icon: Postgresql },
@@ -36,13 +37,13 @@ const T = {
   Electron: { name: 'Electron', Icon: Electron },
   CF: { name: 'Cloudflare', Icon: Cloudflare },
   ArchLinux: { name: 'Arch Linux', Icon: Archlinux },
-  Zsh: { name: 'Zsh', Icon: Zsh },
-  JS: { name: 'JavaScript', Icon: Javascript },
-  Swift: { name: 'Swift', Icon: Swift },
-  Rust: { name: 'Rust', Icon: Rust },
+  Zsh: { name: 'Zsh', Icon: Zsh, language: true },
+  JS: { name: 'JavaScript', Icon: Javascript, language: true },
+  Swift: { name: 'Swift', Icon: Swift, language: true },
+  Rust: { name: 'Rust', Icon: Rust, language: true },
   Wasm: { name: 'WebAssembly', Icon: Webassembly },
-  Cpp: { name: 'C++', Icon: Cplusplus },
-  Java: { name: 'Java', Icon: Openjdk },
+  Cpp: { name: 'C++', Icon: Cplusplus, language: true },
+  Java: { name: 'Java', Icon: Openjdk, language: true },
   Fabric: { name: 'Fabric', Icon: Fabric },
   Wgpu: { name: 'wgpu', Icon: Wgpu },
 } satisfies Record<string, Tech>;

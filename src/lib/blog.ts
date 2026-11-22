@@ -11,12 +11,12 @@ export async function getPosts(): Promise<BlogPost[]> {
 const WORDS_PER_MINUTE = 200;
 
 /**
- * Rough reading time from the raw Markdown/MDX source. Counting the source
- * rather than the rendered HTML is what lets the index show the same number as
+ * Words of prose in the raw Markdown/MDX source. Counting the source rather
+ * than the rendered HTML is what lets the index show the same reading time as
  * the article page, since `render()` output is only available on the article.
  */
-export function readingTimeMinutes(body: string | undefined): number {
-  if (!body) return 1;
+export function wordCount(body: string | undefined): number {
+  if (!body) return 0;
 
   const prose = body
     .replace(/```[\s\S]*?```/g, ' ')
@@ -28,8 +28,11 @@ export function readingTimeMinutes(body: string | undefined): number {
     .replace(/\[([^\]]*)\]\([^)]*\)/g, '$1')
     .replace(/[#>*_~|-]/g, ' ');
 
-  const words = prose.split(/\s+/).filter(Boolean).length;
-  return Math.max(1, Math.round(words / WORDS_PER_MINUTE));
+  return prose.split(/\s+/).filter(Boolean).length;
+}
+
+export function readingTimeMinutes(body: string | undefined): number {
+  return Math.max(1, Math.round(wordCount(body) / WORDS_PER_MINUTE));
 }
 
 export function formatPostDate(date: Date): string {

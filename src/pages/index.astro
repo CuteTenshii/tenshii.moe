@@ -1,7 +1,10 @@
 ---
 import BaseLayout from '@/layouts/BaseLayout.astro';
 import Hero from '@/components/Hero.astro';
+import { graph, person, website } from '@/lib/structured-data';
+
+const description = 'Tenshii\'s personal website, a 19 years old developer from France.\nI code things, and sometimes it\'s useful :3';
 ---
-<BaseLayout title="Tenshii.moe" description={'Tenshii\'s personal website, a 19 years old developer from France.\nI code things, and sometimes it\'s useful :3'}>
+<BaseLayout title="Tenshii.moe" description={description} structuredData={graph(website(description), person())}>
   <Hero />
 </BaseLayout>

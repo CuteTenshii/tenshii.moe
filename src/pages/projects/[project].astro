@@ -9,6 +9,7 @@ import {
   type ComponentEmbed,
 } from '@/lib/discord-embed';
 import { firstImage } from '@/lib/content-image';
+import { breadcrumbs, graph, personRef, siteUrl } from '@/lib/structured-data';
 
 export const getStaticPaths: GetStaticPaths = () => projects.map((project) => ({
   params: { project: project.slug },
@@ -20,17 +21,27 @@ const entry = await getEntry('projects', project.slug);
 const Content = entry ? (await render(entry)).Content : null;
 const category = categories.find(({ id }) => id === project.category)!;
 const description = project.description;
-const structuredData = {
-  '@context': 'https://schema.org',
-  '@type': 'SoftwareApplication',
-  name: project.name,
-  description,
-  applicationCategory: category.label,
-  url: project.link,
-};
-
-const canonical = new URL(Astro.url.pathname, Astro.site);
+const canonical = siteUrl(Astro.url.pathname);
+const cover = entry ? await firstImage(entry) : null;
 const projectImage = project.image && new URL(project.image, Astro.site);
+const elsewhere = [...new Set([project.link, project.repo])].filter((url) => url && url !== canonical);
+const structuredData = graph(
+  {
+    '@type': 'SoftwareSourceCode',
+    name: project.name,
+    description,
+    url: canonical,
+    mainEntityOfPage: canonical,
+    ...(project.repo && { codeRepository: project.repo }),
+    programmingLanguage: project.tech.filter(({ language }) => language).map(({ name }) => name),
+    keywords: [category.label, ...project.tech.filter(({ language }) => !language).map(({ name }) => name)],
+    ...(cover && { image: siteUrl(cover.src) }),
+    ...(elsewhere.length > 0 && { sameAs: elsewhere }),
+    author: personRef(),
+  },
+  breadcrumbs(['Projects', '/projects/'], [project.name, Astro.url.pathname]),
+);
+
 // Discord cannot unfurl SVG logos, so those fall back to the profile picture.
 const embedThumbnail = projectImage && isEmbeddableMedia(projectImage)
   ? thumbnail(projectImage, `${project.name} logo`)
@@ -49,7 +60,7 @@ const discordEmbed: ComponentEmbed = {
         ],
         accessory: embedThumbnail,
       },
-      ...coverImage(entry ? await firstImage(entry) : null, Astro.site),
+      ...coverImage(cover, Astro.site),
       separator(),
       ...actionRows([
         linkButton('View project', canonical),

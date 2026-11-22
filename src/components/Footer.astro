@@ -3,6 +3,7 @@
 import Github from 'simple-icons-astro/Github';
 import Discord from 'simple-icons-astro/Discord';
 import Forgejo from './icons/Forgejo.astro';
+import { profileUrls } from '@/lib/profiles';
 
 const year = new Date().getFullYear();
 
@@ -16,9 +17,9 @@ const iconLink = 'inline-flex size-11 items-center justify-center rounded-lg tra
 // this background, so its mark takes the white it uses on dark everywhere else.
 // The Forgejo icon carries its own two colors and needs no tint.
 const profiles = [
-  { href: 'https://github.com/CuteTenshii', label: 'GitHub', Icon: Github, tint: 'text-white' },
-  { href: 'https://git.tenshii.moe/Tenshii', label: 'Forgejo', Icon: Forgejo, tint: '' },
-  { href: 'https://discord.com/users/1370735264678281257', label: 'Discord', Icon: Discord, tint: 'text-[#5865F2]' },
+  { href: profileUrls.github, label: 'GitHub', Icon: Github, tint: 'text-white' },
+  { href: profileUrls.forgejo, label: 'Forgejo', Icon: Forgejo, tint: '' },
+  { href: profileUrls.discord, label: 'Discord', Icon: Discord, tint: 'text-[#5865F2]' },
 ];
 ---
 <footer class="text-center py-4 mt-8 px-4 backdrop-blur-lg">
@@ -32,7 +33,7 @@ const profiles = [
     ))}
 
     <li>
-      <a href="https://miwa.lol/tenshii" target="_blank" rel="noopener" aria-label="Miwa.lol" class={iconLink}>
+      <a href={profileUrls.miwa} target="_blank" rel="noopener" aria-label="Miwa.lol" class={iconLink}>
         <img
           src="/img/miwa.webp" alt="" draggable="false" width={20} height={20}
           class="size-5"
