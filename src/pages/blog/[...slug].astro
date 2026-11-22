@@ -4,7 +4,10 @@ import { render } from 'astro:content';
 import BaseLayout from '@/layouts/BaseLayout.astro';
 import { getPosts, readingTimeMinutes, formatPostDate, type BlogPost } from '@/lib/blog';
 import ArrowLeft from '@lucide/astro/icons/arrow-left';
-import { SITE_ACCENT, escapeMarkdown, linkButton, separator, text, thumbnail, type ComponentEmbed } from '@/lib/discord-embed';
+import {
+  SITE_ACCENT, coverImage, escapeMarkdown, linkButton, separator, text, thumbnail, type ComponentEmbed,
+} from '@/lib/discord-embed';
+import { firstImage } from '@/lib/content-image';
 
 export const getStaticPaths: GetStaticPaths = async () => {
   const posts = await getPosts();
@@ -46,6 +49,7 @@ const discordEmbed: ComponentEmbed = {
         ],
         accessory: thumbnail(new URL('/img/pfp.webp', Astro.site), 'Tenshii'),
       },
+      ...coverImage(await firstImage(post), Astro.site),
       separator(),
       { type: 1, components: [linkButton('Read post', canonical)] },
     ],

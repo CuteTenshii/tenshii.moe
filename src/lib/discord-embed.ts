@@ -23,6 +23,7 @@ const MAX_MEDIA_URL_LENGTH = 2048;
 const MAX_BUTTON_URL_LENGTH = 512;
 const MAX_BUTTON_LABEL_LENGTH = 80;
 const MAX_BUTTONS_PER_ROW = 5;
+const MAX_MEDIA_DESCRIPTION_LENGTH = 1024;
 const MEDIA_EXTENSIONS = ['.png', '.gif', '.jpg', '.jpeg', '.webp', '.avif', '.mp4', '.webm', '.mov'];
 
 /** The blue used for links across the site (Tailwind's blue-400). */
@@ -44,6 +45,17 @@ export const thumbnail = (url: string | URL, description?: string): Thumbnail =>
 });
 
 export const separator = (): Separator => ({ type: 14 });
+
+/** A full-width gallery holding just `image`, or nothing when there is none Discord can unfurl. */
+export function coverImage(image: { src: string; alt: string } | null, site: URL | undefined): MediaGallery[] {
+  if (!image) return [];
+
+  const url = new URL(image.src, site);
+  if (!isEmbeddableMedia(url)) return [];
+
+  const description = image.alt.slice(0, MAX_MEDIA_DESCRIPTION_LENGTH);
+  return [{ type: 12, items: [{ media: { url: url.toString() }, ...(description && { description }) }] }];
+}
 
 /** Splits buttons into as many rows as Discord's per-row limit requires. */
 export function actionRows(buttons: LinkButton[]): ActionRow[] {

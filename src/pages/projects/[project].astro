@@ -5,9 +5,10 @@ import ArrowLeft from '@lucide/astro/icons/arrow-left';
 import BaseLayout from '@/layouts/BaseLayout.astro';
 import { categoryStyle, categories, projects, type Project } from '@/lib/projects';
 import {
-  SITE_ACCENT, actionRows, escapeMarkdown, isEmbeddableMedia, linkButton, separator, text, thumbnail,
+  SITE_ACCENT, actionRows, coverImage, escapeMarkdown, isEmbeddableMedia, linkButton, separator, text, thumbnail,
   type ComponentEmbed,
 } from '@/lib/discord-embed';
+import { firstImage } from '@/lib/content-image';
 
 export const getStaticPaths: GetStaticPaths = () => projects.map((project) => ({
   params: { project: project.slug },
@@ -48,6 +49,7 @@ const discordEmbed: ComponentEmbed = {
         ],
         accessory: embedThumbnail,
       },
+      ...coverImage(entry ? await firstImage(entry) : null, Astro.site),
       separator(),
       ...actionRows([
         linkButton('View project', canonical),
