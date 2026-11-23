@@ -141,6 +141,17 @@ export const projects: Project[] = [
     ],
   },
   {
+    name: 'Uber Eats MCP',
+    slug: 'ubereats-mcp',
+    description: 'An MCP server for your Uber Eats account. An agent can read your orders, search restaurants and menus, and fill carts that you check out yourself on ubereats.com.',
+    link: 'https://git.tenshii.moe/Tenshii/ubereats-mcp',
+    image: null,
+    repo: 'https://git.tenshii.moe/Tenshii/ubereats-mcp',
+    category: 'tool',
+    tech: [T.Go],
+    links: [{ label: 'Forgejo', url: 'https://git.tenshii.moe/Tenshii/ubereats-mcp', Icon: Forgejo }],
+  },
+  {
     name: 'Deezer Discord RPC',
     slug: 'deezer-discord-rpc',
     description: 'A Discord RPC for Deezer.',
