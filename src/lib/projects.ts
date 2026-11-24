@@ -9,6 +9,7 @@ import Electron from 'simple-icons-astro/Electron';
 import Cloudflare from 'simple-icons-astro/Cloudflare';
 import Archlinux from 'simple-icons-astro/Archlinux';
 import Zsh from 'simple-icons-astro/Zsh';
+import Hyprland from 'simple-icons-astro/Hyprland';
 import AstroIcon from 'simple-icons-astro/Astro';
 import Javascript from 'simple-icons-astro/Javascript';
 import Swift from 'simple-icons-astro/Swift';
@@ -38,6 +39,7 @@ const T = {
   CF: { name: 'Cloudflare', Icon: Cloudflare },
   ArchLinux: { name: 'Arch Linux', Icon: Archlinux },
   Zsh: { name: 'Zsh', Icon: Zsh, language: true },
+  Hyprland: { name: 'Hyprland', Icon: Hyprland },
   JS: { name: 'JavaScript', Icon: Javascript, language: true },
   Swift: { name: 'Swift', Icon: Swift, language: true },
   Rust: { name: 'Rust', Icon: Rust, language: true },
@@ -234,7 +236,7 @@ export const projects: Project[] = [
     image: '/img/dotfiles.webp',
     repo: 'https://git.tenshii.moe/Tenshii/dotfiles',
     category: 'config',
-    tech: [T.ArchLinux, T.Zsh],
+    tech: [T.ArchLinux, T.Hyprland, T.Zsh],
     links: [{ label: 'Forgejo', url: 'https://git.tenshii.moe/Tenshii/dotfiles', Icon: Forgejo }],
   },
   {
