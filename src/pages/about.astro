@@ -1,0 +1,176 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import Go from 'simple-icons-astro/Go';
+import Typescript from 'simple-icons-astro/Typescript';
+import Nextdotjs from 'simple-icons-astro/Nextdotjs';
+import AstroIcon from 'simple-icons-astro/Astro';
+import Vite from 'simple-icons-astro/Vite';
+import Rust from 'simple-icons-astro/Rust';
+import Swift from 'simple-icons-astro/Swift';
+import Cplusplus from 'simple-icons-astro/Cplusplus';
+import Openjdk from 'simple-icons-astro/Openjdk';
+import Kotlin from 'simple-icons-astro/Kotlin';
+import Archlinux from 'simple-icons-astro/Archlinux';
+import Hyprland from 'simple-icons-astro/Hyprland';
+import Debian from 'simple-icons-astro/Debian';
+import Docker from 'simple-icons-astro/Docker';
+import Kubernetes from 'simple-icons-astro/Kubernetes';
+import { breadcrumbs, graph, person, siteUrl } from '@/lib/structured-data';
+
+const description = 'Who I am: a 19 years old developer from France who builds Miwa.lol, takes things apart, and rarely codes without music on.';
+
+// simple-icons' brand fill loses to the layout's fill="currentColor", so each mark
+// takes its color from the text color. Next.js's, Rust's and Java's are black, hence white.
+const stack = [
+  { label: 'Go', Icon: Go, tint: 'text-[#00ADD8]' },
+  { label: 'TypeScript', Icon: Typescript, tint: 'text-[#3178C6]' },
+  { label: 'Next.js', Icon: Nextdotjs, tint: 'text-white' },
+  { label: 'Vite', Icon: Vite, tint: 'text-[#646CFF]' },
+  { label: 'Astro', Icon: AstroIcon, tint: 'text-[#BC52EE]' },
+  { label: 'Rust', Icon: Rust, tint: 'text-white' },
+  { label: 'Swift', Icon: Swift, tint: 'text-[#F05138]' },
+  { label: 'C++', Icon: Cplusplus, tint: 'text-[#00599C]' },
+  { label: 'Java', Icon: Openjdk, tint: 'text-white' },
+  { label: 'Kotlin', Icon: Kotlin, tint: 'text-[#7F52FF]' },
+  { label: 'Arch Linux', Icon: Archlinux, tint: 'text-[#1793D1]' },
+  { label: 'Hyprland', Icon: Hyprland, tint: 'text-[#58E1FF]' },
+  // Debian's logo red rather than simple-icons' darker #A81D33, which barely shows on this background.
+  { label: 'Debian', Icon: Debian, tint: 'text-[#D70A53]' },
+  { label: 'Docker', Icon: Docker, tint: 'text-[#2496ED]' },
+  { label: 'Kubernetes', Icon: Kubernetes, tint: 'text-[#326CE5]' },
+];
+
+const structuredData = graph(
+  {
+    '@type': 'ProfilePage',
+    name: 'About me',
+    url: siteUrl(Astro.url.pathname),
+    description,
+    inLanguage: 'en',
+    mainEntity: person(),
+  },
+  breadcrumbs(['About', Astro.url.pathname]),
+);
+---
+<BaseLayout title="About me - Tenshii.moe" description={description} structuredData={structuredData}>
+  <div class="container mx-auto max-w-3xl px-4 py-8 pt-16">
+    <header class="mb-8 flex items-center gap-4 border-b border-gray-700/70 pb-6">
+      <img
+        src="/img/pfp.webp" alt="" class="size-16 sm:size-20 shrink-0 rounded-full" draggable="false" width={80} height={80}
+        decoding="async"
+      />
+      <h1 class="text-3xl sm:text-4xl font-bold">About me</h1>
+    </header>
+
+    <div class="article-body">
+      <p>
+        Hi, I'm Tenshii: 19, from France, and I've been writing code since I was 11. There was no AI to ask
+        back then, so I learned from Stack Overflow, tutorials online and YouTube, copying things until they worked and then
+        breaking them to see why.
+      </p>
+      <p>
+        These days I'm doing a work-study program at a tech company, and in my free time I build{' '}
+        <a href="https://miwa.lol/?utm_source=tenshii.moe&utm_medium=referral&utm_campaign=about" target="_blank" rel="noopener">Miwa.lol</a>, a link-in-bio platform that
+        more than 3,000 people now use.
+      </p>
+
+      <h2>What I build</h2>
+      <p>I build stuff. Why do I build it? Depends on the day:</p>
+      <ul>
+        <li>
+          <strong>I have a shitty idea, but it's funny.</strong> Why the hell would you give an AI permission to order Uber Eats
+          for you? No idea, I still <a href="/projects/ubereats-mcp/">made the MCP server for it</a>. Same with{' '}
+          <a href="/projects/mineagent/">MineAgent</a>, a mod where an AI plays Minecraft for you, because why
+          not. I swear it's funny and cool.
+        </li>
+        <li>
+          <strong>I think it would be fun.</strong> Getting Switch games running in a browser sounded fun, so I started{' '}
+          <a href="/projects/switch-wasm/">switch-wasm</a>. It is.
+        </li>
+        <li>
+          <strong>I want a dead game back.</strong> Reviving servers is just cool to do: I did it for{' '}
+          <a href="/blog/rebuilding-paradise-bay-server/">Paradise Bay</a>, and Forza Horizon 1 and 2 are next,
+          which is why <a href="/projects/xeproxy/">XeProxy</a> exists.<br />I also started one for Asphalt 9, whose
+          servers are still very much alive, just to understand how its backend works. That one's on the side
+          for now.
+        </li>
+        <li>
+          <strong>I find a client bad.</strong> The YouTube Music web app is slow and there's basically no native desktop app,
+          so <a href="/projects/ytm-swift/">I made one</a> 😄
+        </li>
+        <li>
+          <strong>I want to annoy people.</strong> guns.lol is one of Miwa's competitors, and their <em>rude</em> protection on
+          profile views was a challenge I took. <a href="/blog/reversing-guns-lol-profile-views/">I won</a>.
+          They banned me. Not my friend though ;)
+        </li>
+        <li>
+          <strong>I just want a good tool.</strong> The <a href="/projects/crunchyroll-downloader/">Crunchyroll Downloader</a>{' '}
+          turned out to be useful to more people than just me: I shared it on Reddit, and it's now past 200
+          stars on GitHub. Decrypting its Widevine DRM wasn't new to me either: back in 2024 I wrote a{' '}
+          <a href="https://github.com/CuteTenshii/spotify-downloader" target="_blank" rel="noopener">Spotify downloader</a>{' '}
+          that pulls tracks straight from Spotify's servers and decrypts them.<br />Making the <a href="/projects/burger-king-fr-api/">Burger King France API</a>{' '}
+          is how I discovered the <em>world</em> of MITM proxies, with{' '}
+          <a href="https://httptoolkit.com" target="_blank" rel="noopener">HTTP Toolkit</a> and{' '}
+          <a href="https://frida.re" target="_blank" rel="noopener">Frida</a>.<br />And{' '}
+          <a href="/projects/deezer-discord-rpc/">Deezer Discord RPC</a> exists because Deezer NEVER added a
+          Discord integration: Spotify is the only one with an official "Listening to Spotify" status, no
+          third-party tool needed.
+        </li>
+      </ul>
+      <p>The rest is on the <a href="/projects/">projects page</a>.</p>
+
+      <h2>What I use</h2>
+      {/* The sentence below names every tool, so the logos are decorative. */}
+      <ul class="flex flex-wrap gap-4 pl-0 list-none" aria-hidden="true">
+        {stack.map(({ label, Icon, tint }) => (
+          <li class={`mt-0 ${tint}`} title={label}>
+            <Icon size={28} />
+          </li>
+        ))}
+      </ul>
+      <p>
+        Go is what I reach for first. Then TypeScript for the web, with Next.js, Vite and sometimes Astro.
+        Rust, Swift, C++, Java and Kotlin come out when the project needs them.
+      </p>
+      <p>
+        My PC runs Arch Linux with Hyprland, and my <a href="/projects/dotfiles/">dotfiles</a> are public. My VPS
+        runs Debian and Docker. I use Kubernetes too, just not on my own VPS.
+      </p>
+
+      <h2>My setup</h2>
+      <ul>
+        <li>
+          <strong>PC:</strong> AMD Ryzen 7 2700, NVIDIA RTX 3060 Ti, 32 GB of RAM on an ASUS Prime X470-Pro, three
+          1 TB SSDs, a Gigabyte G27F at 144 Hz, and an HP E243m as a second screen, except when the Xbox 360 steals its HDMI port 😹
+        </li>
+        <li><strong>Laptop:</strong> a MacBook Air M4. It's my work one, but still.</li>
+        <li>
+          <strong>Phones:</strong> an iPhone 17 as my main one. I also have an iPhone 13, 11 and XR, a Samsung A12,
+          and an Honor 200 ("rooted" with{' '}
+          <a href="https://github.com/YuKongA/ghostlock-app" target="_blank" rel="noopener">GhostLock</a>) that used
+          to be my main phone. But MagicOS... I won't talk about it.
+        </li>
+        <li>
+          <strong>Consoles:</strong> an Xbox 360, a New 3DS XL and a Switch. I don't touch the last two much, and
+          all three are jailbroken because of course they are.
+        </li>
+      </ul>
+
+      <h2>Off the keyboard</h2>
+      <p>
+        I almost never do anything without music on. YouTube Music is where I listen now, and{' '}
+        <a href="https://www.last.fm/user/ItsYuuto" target="_blank" rel="noopener">my Last.fm</a> keeps track of
+        all of it. I built <a href="/projects/ytm-swift/">YTM-Swift</a> mostly because Google can't make a desktop
+        client, or a proper web client either.
+      </p>
+      <p>
+        When I'm not coding, I play games, mostly racing
+        (<a href="https://en.wikipedia.org/wiki/Forza#Horizon" target="_blank" rel="noopener">Forza Horizon</a>,{' '}
+        <a href="https://en.wikipedia.org/wiki/Need_for_Speed" target="_blank" rel="noopener">Need for Speed</a>,{' '}
+        <a href="https://en.wikipedia.org/wiki/Burnout_Paradise" target="_blank" rel="noopener">Burnout Paradise</a>,{' '}
+        <a href="https://en.wikipedia.org/wiki/Midnight_Club:_Los_Angeles" target="_blank" rel="noopener">Midnight Club: LA</a>)
+        and <a href="https://en.wikipedia.org/wiki/Grand_Theft_Auto_V" target="_blank" rel="noopener">GTA V</a>, usually on PC or the Xbox 360.
+      </p>
+    </div>
+  </div>
+</BaseLayout>
